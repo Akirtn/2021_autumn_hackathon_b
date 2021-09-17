@@ -1,46 +1,109 @@
-# Getting Started with Create React App
+# Getting Started
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+First, run the development server:
 
-## Available Scripts
+`npm run start` or `yarn start`
 
-In the project directory, you can run:
 
-### `npm start`
+# Version
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+node v12.16.3
+npm 6.14.4
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+# Development environment
 
-### `npm test`
+1・React
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+-  対応ライブラリが多く、リッチな UI を実装できるため
+-  DOM 操作のパフォーマンスチューニングを自動でしてくれるため
+-  コンポーネント指向であり、再利用性と拡張性が高いため
+-  TypeScript との相性が vue.js より良いため
 
-### `npm run build`
+2・TypeScript
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+-  型宣言をすることで、開発効率、コードの安全性と可読性を高めるため
+-  ビルドエラーを事前に解決することで修正コストを下げるため
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+4・Material UI
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+-  直観的に理解できるUIにするため
+-  デザインが決まっていて、スピーディーに開発できるため
 
-### `npm run eject`
+4・react-router-dom
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+-  ルーティングに使用するため
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+5・axios
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+-  簡潔にコードが書けるため
+-  fetchライブラリと比較
+    -  jsonにパースしなくてもいい  
+    -  404や500エラーをキャッチできる
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+6・husky + lint-staged
 
-## Learn More
+-  コードの品質担保のため push・commit 前に lint と type-check を走らせる
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+# Architecture
+
+atomicデザインとクリーンアーキテクチャライクな設計を採用した。利点として下記が挙げられる
+
+-  変更に強いこと
+-  理解しやすいこと
+-  再利用しやすいこと
+
+今回は、そこまでコンポーネント数が多くならいことを踏まえて、以下のatomicデザインにしている
+
+
+src</br> 
+　　　 ├── action 
+　　　 ├── components
+　　　         ├── pages
+　　　         ├── templates
+　　　         ├── uiParts
+　　　 ├── hooks  
+　　　 ├── mocks  
+　　　 ├── services  
+　　　 ├── types    
+　　　 └── utils
+
+### components
+
+-  UI コンポーネントを定義
+
+    #### pages
+    
+    -  ページコンポーネント
+
+    #### templates
+    
+    -  全体的なスタイル調整をする
+    -  ロジック周りもここで行う(本来はorganisms)
+
+    #### uiParts
+    
+    -  atmos＆molecules
+
+### hooks
+
+-  汎用的な hooks と API コールに関するカスタムフックを定義
+
+
+### mocks
+
+-  テストやローカル検証用のモックオブジェクト
+
+### services
+
+-  ロジック周り
+
+### types
+
+-  fetch情報など使用頻度の高いモデルの型定義
+
+### utils
+
+-  全体的なスタイルを定義(primaryColor,font-famliy, margin..)
+
+

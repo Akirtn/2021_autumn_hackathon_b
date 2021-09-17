@@ -22,18 +22,18 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "check-types": "tsc --noEmit",
-    "lint": "eslint src/**/*.{js,ts,tsx}",
-    "lint:fix": "eslint src/**/*.{js,ts,tsx} --fix",
+    "lint": "eslint frontend/src/**/*.{js,ts,tsx}",
+    "lint:fix": "eslint frontend/src/**/*.{js,ts,tsx} --fix",
     "format": "prettier --write .",
     "test-all": "npx yarn-run-all lint check-types lint:fix",
     "prepare": "cd .. && husky install frontend/.husky",
     "lint-staged": "lint-staged"
   },
   "lint-staged": {
-    "src/**/*.{ts,tsx}": [
-      "eslint src/**/*.{js,ts,tsx} --fix"
+    "frontend/src/**/*.{ts,tsx}": [
+      "eslint frontend/src/**/*.{js,ts,tsx} --fix"
     ],
-    "src/**": [
+    "frontend/src/**": [
       "prettier --write ."
     ]
   },

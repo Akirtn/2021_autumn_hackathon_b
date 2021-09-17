@@ -30,7 +30,7 @@
     "lint-staged": "lint-staged"
   },
   "lint-staged": {
-    "frontend/src/**/*.{ts,tsx}": [
+    "frontend/src/**/*.{js,ts,tsx}": [
       "eslint frontend/src/**/*.{js,ts,tsx} --fix"
     ],
     "frontend/src/**": [

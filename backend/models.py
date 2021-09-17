@@ -1,7 +1,7 @@
 from enum import unique
 from flask_login import UserMixin
-import db
-import bcrypt
+from . import db
+from . import bcrypt
 
 import datetime
 
@@ -32,8 +32,8 @@ class User(db.Model,UserMixin):
 class Community(db.Model):
     __tablename__ = 'communities'
     id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
-    community_name = db.Column(db.String(), nullable=False)
-    domain_addr = db.Column(db.String(), nullable=False)
+    community_name = db.Column(db.String(length=50), nullable=False)
+    domain_addr = db.Column(db.String(length=50), nullable=False)
 
 
 # 友達の情報
@@ -42,7 +42,7 @@ class Friend(db.Model):
     id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
     user_id = db.Column(db.String(), db.ForeignKey("users.id"), nullable=False)
     # 友達グループの番号
-    friend_id = db.Column(db.Integer(), nulltable=False)
+    friend_id = db.Column(db.Integer(), nullable=False)
 
 
 # 空き時間の情報
@@ -58,20 +58,4 @@ class Schedule(db.Model):
     def date_to_unix(self, d_time):
         return d_time.timestamp()
 
-    
-########### テスト用（後で消す）#############
-def test():
-    sch=Schedule(user_id=0, start_time=datetime.datetime.fromtimestamp(0), end_time=datetime.datetime.fromtimestamp(100))
-    db.session.add(sch)
-    db.session.commit()
-    sch=Schedule(user_id=0, start_time=datetime.datetime.fromtimestamp(200), end_time=datetime.datetime.fromtimestamp(300))
-    db.session.add(sch)
-    db.session.commit()
-    sch=Schedule(user_id=1, start_time=datetime.datetime.fromtimestamp(0), end_time=datetime.datetime.fromtimestamp(250))
-    db.session.add(sch)
-    db.session.commit()
 
-    time_data=db.session.query(Schedule).filter_by(user_id==1).all()
-    print(time_data)
-
-test()

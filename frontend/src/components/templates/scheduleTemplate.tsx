@@ -1,7 +1,12 @@
-import Calendar from '@components/uiParts/calendar'
 import React, { FC } from 'react'
 
+import Calendar from '../uiParts/calendar'
+
 const ScheduleTemplate: FC = () => {
-   return <Calendar />
+   return (
+      <div>
+         <Calendar />
+      </div>
+   )
 }
 export default ScheduleTemplate

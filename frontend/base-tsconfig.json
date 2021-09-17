@@ -10,5 +10,6 @@
          "services": ["./src/services"],
          "utils": ["./src/utils"]
       }
-   }
+   },
+   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*"]
 }

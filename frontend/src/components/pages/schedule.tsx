@@ -1,5 +1,6 @@
-import ScheduleTemplate from '@components/templates/scheduleTemplate'
 import React, { FC, useEffect, useState } from 'react'
+
+import ScheduleTemplate from '../templates/scheduleTemplate'
 
 const Schedule: FC = () => {
    return <ScheduleTemplate />

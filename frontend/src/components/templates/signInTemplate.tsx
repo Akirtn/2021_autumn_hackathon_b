@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 
 const SignInTemplate: FC = () => {
-   return <div></div>
+   return <div>signIn</div>
 }
 export default SignInTemplate

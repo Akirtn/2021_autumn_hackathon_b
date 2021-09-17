@@ -1,19 +1,27 @@
-import Schedule from '@components/pages/schedule'
-import SignIn from '@components/pages/signIn'
-import React from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import React, { FC } from 'react'
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
 
-const App: React.FC = () => {
+import Schedule from './components/pages/schedule'
+import SignIn from './components/pages/signIn'
+
+const App: FC = () => {
    return (
       <Router>
-         <Route path="/login">
-            <Schedule />
-         </Route>
-         <Route path="/schedule">
-            <SignIn />
-         </Route>
+         <Switch>
+            <Route exact path="/">
+               <SignIn />
+            </Route>
+            <Route exact path="/schedule">
+               <Schedule />
+            </Route>
+            <Route>
+               <NoMatch />
+            </Route>
+         </Switch>
       </Router>
    )
 }
 
 export default App
+
+const NoMatch = () => <h2>Not Found</h2>

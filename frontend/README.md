@@ -59,9 +59,6 @@ atomicデザインとクリーンアーキテクチャライクな設計を採�
 src</br> 
 　　　 ├── action 
 　　　 ├── components
-　　　 │     ├── pages
-　　　 │     ├── templates
-　　　 │     ├── uiParts
 　　　 ├── hooks  
 　　　 ├── mocks  
 　　　 ├── services  

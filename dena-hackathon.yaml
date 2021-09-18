@@ -1,0 +1,180 @@
+swagger: '2.0'
+info:
+  title: dena-hackathon
+  version: '1.0'
+host: 'localhost:5000'
+schemes:
+  - http
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /users/empty_schedule/:
+    parameters: []
+    get:
+      summary: EmptySchedule関連エンドポイント
+      tags: []
+      operationId: EmptySchedule登録機能
+      description: Retrieve the information of the user with the matching user ID.
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              empty_schedules:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    schedule_id:
+                      type: integer
+                    start_at:
+                      type: string
+                    end_at:
+                      type: string
+    post:
+      summary: ''
+      operationId: post-users-empty_schedule
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              schedule_id:
+                type: integer
+      security:
+        - API Key - 1: []
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              start_time:
+                type: integer
+              end_time:
+                type: integer
+  /users/matched_schedule/:
+    parameters: []
+    get:
+      summary: EmptySchedule関連エンドポイント
+      tags: []
+      operationId: kk
+      description: Retrieve the information of the user with the matching user ID.
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              matched_schedules:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    schedule_id:
+                      type: integer
+                    start_at:
+                      type: string
+                    end_at:
+                      type: string
+                    matched_member:
+                      type: object
+                      properties:
+                        user_id:
+                          type: integer
+                        name:
+                          type: string
+    post:
+      summary: ''
+      operationId: kokokok
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              schedule_id:
+                type: integer
+              start_at:
+                type: integer
+              end_at:
+                type: integer
+              matched_member:
+                type: object
+                properties:
+                  user_id:
+                    type: integer
+                  name:
+                    type: string
+      security:
+        - API Key - 1: []
+      parameters: []
+  '/users/empty_schedule/{schedule_id}':
+    parameters:
+      - type: string
+        name: schedule_id
+        in: path
+        required: true
+    delete:
+      summary: ''
+      operationId: delete-users-empty_schedule-schedule_id
+      responses:
+        '200':
+          description: OK
+  /users/members:
+    parameters: []
+    get:
+      summary: ''
+      operationId: get-users-friends
+      responses:
+        '200':
+          description: OK
+          schema:
+            description: ''
+            type: object
+            x-examples:
+              example-1:
+                members:
+                  - user_id: 0
+                    name: string
+            properties:
+              members:
+                type: array
+                uniqueItems: true
+                minItems: 1
+                items:
+                  type: object
+                  properties:
+                    user_id:
+                      type: number
+                    name:
+                      type: string
+                      minLength: 1
+                    tags:
+                      type: array
+                      items:
+                        type: string
+                  required:
+                    - user_id
+                    - name
+            required:
+              - members
+          examples:
+            example-1:
+              members:
+                - user_id: 0
+                  name: string
+                  tags:
+                    - string
+        '201':
+          description: Created
+          schema:
+            type: object
+            properties: {}
+securityDefinitions:
+  API Key - 1:
+    type: basic

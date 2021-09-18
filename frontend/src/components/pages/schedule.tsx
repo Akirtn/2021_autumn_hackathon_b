@@ -1,4 +1,5 @@
 import React, { createContext, FC, useEffect, useState } from 'react'
+import { useHistory, useLocation } from 'react-router-dom'
 
 import {
    user_info,
@@ -27,7 +28,9 @@ const Schedule: FC = () => {
    const [matchedSchedules, setMatchedSchedules] =
       useState<any>(matched_schedules)
    const [memberList, setMemberList] = useState<any>(members)
-
+   const location = useLocation()
+   // ここにユーザ情報入ってます
+   console.log(location.state)
    return (
       <div>
          <ScheduleContext.Provider

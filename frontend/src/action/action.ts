@@ -14,19 +14,31 @@ switch (window.location.host) {
 }
 
 export const Api = {
-   singnIn: async () => {
-      await axios
-         .get(`${api}/signIn`)
+   signIn: async (email: string, password: string) => {
+      return await axios
+         .post(`${api}/signIn`, {
+            email: email,
+            password: password,
+         })
          .then(function (response) {
             // handle success
-            console.log(response)
+            return response.data
          })
          .catch(function (error) {
             // handle error
-            console.log(error)
-         })
-         .finally(function () {
-            // always executed
+            if (error.response) {
+               // レスポンスは返ってくるが 200 番台じゃない場合
+               console.log(error.response.data)
+               console.log(error.response.status)
+               console.log(error.response.headers)
+            } else if (error.request) {
+               // レスポンスがない場合
+               console.log(error.request)
+            } else {
+               // それ以外
+               console.log('Error', error.message)
+            }
+            console.log(error.config)
          })
    },
 }

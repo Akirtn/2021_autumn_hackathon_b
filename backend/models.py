@@ -86,4 +86,3 @@ class MatchedTable(db.Model):
     # マッチした予定の情報
     info = db.Column(db.Integer(),db.ForeignKey("matchedschedules.id"),nullable=False)
 
-

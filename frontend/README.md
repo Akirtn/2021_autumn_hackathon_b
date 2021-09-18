@@ -1,8 +1,9 @@
 # Getting Started
 
 First, run the development server:
+1,cd frontend
 
-`npm run start` or `yarn start`
+2, `npm run start` or `yarn start`
 
 
 # Version

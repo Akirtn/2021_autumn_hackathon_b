@@ -12,7 +12,7 @@ class User(db.Model,UserMixin):
     id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
     user_name = db.Column(db.String(length=30), nullable=False)
     community_id = db.Column(db.Integer(),db.ForeignKey("communities.id"),nullable=False)
-    email_address = db.Column(db.String(length=50), nullable=False, unique=True)
+    email_address = db.Column(db.String(length=200), nullable=False, unique=True)
     password_hash = db.Column(db.String(length=60), nullable=False)
     is_active = db.Column(db.Boolean(), nullable=False,default=True)
     @property
@@ -65,13 +65,25 @@ class EmptySchedule(db.Model):
     #     return d_time.timestamp()
 
 
+# マッチした時間と内容の情報
 class MatchedSchedule(db.Model):
     __tablename__ = "matchedschedules"
     id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
-    # マッチしたフレンドの情報
-    fried_id = db.Column(db.Integer(),db.ForeignKey("friends.id"),nullable=False)
     # マッチした時間帯: start~end（Max1時間）(unixtime)
     start_time = db.Column(db.Integer(), nullable=False)
     end_time = db.Column(db.Integer(), nullable=False)
     # 予定の詳細（誰とどこでetc）
     memo = community_name = db.Column(db.String(), nullable=False)
+
+
+# マッチ時間とユーザーのタグ付け
+class MatchedTable(db.Model):
+    __tablename__ = "matchedtable"
+    id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
+    # ユーザーの情報（idが若い方をuser1とする）
+    user1_id = db.Column(db.Integer(),db.ForeignKey("users.id"),nullable=False)
+    user2_id = db.Column(db.Integer(),db.ForeignKey("users.id"),nullable=False)
+    # マッチした予定の情報
+    info = db.Column(db.Integer(),db.ForeignKey("matchedschedules.id"),nullable=False)
+
+

@@ -32,7 +32,7 @@ const LoginForm: FC = () => {
    const [hasError, setHasError] = useState(false)
 
    const handleSubmit = () => {
-      Api.signIn(emailText, passwordText).then((res) => {
+      Api.login(emailText, passwordText).then((res) => {
          if (res) {
             history.push({ pathname: '/schedule', state: res })
          } else {

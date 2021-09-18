@@ -23,14 +23,7 @@ export type MatchedSchedule = {
       name: string
    }
 }
-
-export type MatchedSchedules = {
-   matched_member: {
-      user_id: number
-      name: string
-   }
-}[] &
-   EmptySchedulesType
+export type MatchedSchedules = MatchedSchedule[]
 
 export const empty_schedules: EmptySchedulesType = [
    {

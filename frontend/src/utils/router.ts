@@ -1,6 +1,6 @@
 // Read Only
 export const Routes = {
-   signIn: { title: 'ログイン', path: '/schedule' },
+   login: { title: 'ログイン', path: '/schedule' },
    schedule: { title: 'スケジュール', path: '/schedule' },
 } as const
 

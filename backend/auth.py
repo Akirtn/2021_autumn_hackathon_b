@@ -2,6 +2,7 @@ from http import HTTPStatus
 from flask import Blueprint,request,Response,jsonify
 from flask_login import login_user, logout_user, login_required,current_user
 from .models import User
+from .wrapper import user_tags_get
 
 auth = Blueprint('auth', __name__)
 
@@ -19,8 +20,9 @@ def login():
 
     # if the above check passes, then we know the user has the right credentials
     login_user(user, remember=True)
-    retvalue={"user_id":0,"name":"","tags":["kskks"]}
-    return jsonify(retvalue)
+    tags=user_tags_get(current_user)
+    retvalue={"user_id":current_user.id,"name":current_user.name,"tags":tags}
+    return jsonify(retvalue),200
 
 
 

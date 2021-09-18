@@ -1,5 +1,5 @@
 from . import db
-from .models import User, Community, TagTable, Tag, MatchedSchedule, MatchedTable
+from .models import User, Community, TagTable, Tag, MatchedSchedule, MatchedTable,EmptySchedule
 
 
 def users_empty_schedule_get(user_info):
@@ -25,11 +25,12 @@ def users_empty_schedule_post(user_id, start_time, end_time):
     """
     '/users/empty_schedule/', methods=['POST']
     input: user_id: Int, start_time: Int, end_time: Int
-    output: None
+    output: schedule_id
     """
     schedule = EmptySchedule(user_id=user_id, start_time=start_time, end_time=end_time)
     db.session.add(schedule)
     db.session.commit()
+    return schedule.id
 
 def users_matched_schedule_get(user_info):
     """
@@ -42,11 +43,11 @@ def users_matched_schedule_get(user_info):
     info_dic = {}
     flag = False
     matched_s = db.session.query(MatchedSchedule, MatchedTable).join(
-                    MatchedSchedule, MatchedTable.user1_id==user.id).first()
+                    MatchedSchedule, MatchedTable.user1_id==user_info.id).first()
     if not matched_s:
         flag = False
         matched_s = db.session.query(MatchedSchedule, MatchedTable).join(
-                    MatchedSchedule, MatchedTable.user2_id==user.id).first()
+                    MatchedSchedule, MatchedTable.user2_id==user_info.id).first()
     if matched_s:
         schedule, table = matched_s
         info_dic["schedule_id"] = schedule.id
@@ -62,12 +63,12 @@ def users_matched_schedule_get(user_info):
     return res_dic
 
 
-def users_matched_schedule_post(user_id, schedule_id, start_at, end_at,
-                                matched_user_id, matched_user_name):
+def users_matched_schedule_save(user_id, start_at, end_at,
+                                matched_user_id):
     """
 ​    '/users​/matched_schedule​/', methods=['POST']
-    input: schedule_id: Int, start_at: Int, end_at: Int,
-           matched_user_id: Int, matched_user_name: String
+    input: start_at: Int, end_at: Int,
+           matched_user_id: Int
     output: None
     """
     memo = str(user_id) + "と" + str(matched_user_id) + "の予定です。"
@@ -117,3 +118,12 @@ def users_members(user_info):
     res_dic["members"] = info_lst
     return res_dic
 
+def user_tags_get(user_info):
+    """
+    '/users/members', methods=['GET']
+    input: user_info: User
+    output: res_array: array
+    """
+    q=db.session.query(Tag,TagTable).join(Tag, TagTable.user_id==user_info.id).all()
+    res_array=[t.tag_name for t in q]
+    return res_array

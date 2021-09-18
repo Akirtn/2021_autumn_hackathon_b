@@ -5,7 +5,9 @@ import React, { useState, FC } from 'react'
 
 type Props = {
    message: string
-   isSucceeded: boolean
+   severity: Color
+   openSnackBar: boolean
+   setOpenSnackBar: (v: boolean) => void
 }
 
 type AlertMyProps = {
@@ -27,8 +29,7 @@ const useStyles = makeStyles((theme) => ({
 
 const CustomizedSnackBar: FC<Props> = (props) => {
    const classes = useStyles()
-   const { message, isSucceeded } = props
-   const [openSnackBar, setOpenSnackBar] = useState<boolean>(true)
+   const { message, severity, openSnackBar, setOpenSnackBar } = props
 
    const handleClose = (event: any, reason?: string) => {
       if (reason === 'clickaway') {
@@ -38,8 +39,6 @@ const CustomizedSnackBar: FC<Props> = (props) => {
       setOpenSnackBar(false)
    }
 
-   const severity: Color = isSucceeded ? 'success' : 'error'
-
    return (
       <>
          <div className={classes.root}>
@@ -47,6 +46,7 @@ const CustomizedSnackBar: FC<Props> = (props) => {
                open={openSnackBar}
                autoHideDuration={3000}
                onClose={handleClose}
+               anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
             >
                <Alert
                   onClose={(event) => {

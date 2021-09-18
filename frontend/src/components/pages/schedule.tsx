@@ -8,6 +8,7 @@ import {
    members,
 } from '../../mocks/fetchData'
 import ScheduleTemplate from '../templates/scheduleTemplate'
+import { MatchedSchedules } from '../../mocks/fetchData'
 
 type ContextProps = {
    userInfo: any
@@ -26,7 +27,7 @@ const Schedule: FC = () => {
    const [userInfo, setUserInfo] = useState<any>(user_info)
    const [emptySchedules, setEmptySchedules] = useState<any>(empty_schedules)
    const [matchedSchedules, setMatchedSchedules] =
-      useState<any>(matched_schedules)
+      useState<MatchedSchedules>(matched_schedules)
    const [memberList, setMemberList] = useState<any>(members)
    const location = useLocation()
    // ここにユーザ情報入ってます

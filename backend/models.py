@@ -75,4 +75,3 @@ class MatchedSchedule(db.Model):
     end_time = db.Column(db.Integer(), nullable=False)
     # 予定の詳細（誰とどこでetc）
     memo = community_name = db.Column(db.String(), nullable=False)
-

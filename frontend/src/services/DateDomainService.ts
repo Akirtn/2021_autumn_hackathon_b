@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 export class DateDomainService {
    //日本時間に揃えてunixTimeを返すメソッド
    public getJapanUnixTime(date: Date): number {
@@ -36,5 +38,12 @@ export class DateDomainService {
       const dayOfWeekStr = ['日', '月', '火', '水', '木', '金', '土'][dayOfWeek]
       const text = month + '月' + day + '日' + '(' + dayOfWeekStr + ')'
       return text
+   }
+
+   //unixTimeから ISO表記を返す関数
+   public changeUnixTimeToFormattedString(unixTime: string): string {
+      const miliSecondsTime = Number(unixTime) * 1000
+      const formattedTime = moment(miliSecondsTime).toISOString()
+      return formattedTime
    }
 }

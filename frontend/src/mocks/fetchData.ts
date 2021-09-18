@@ -5,6 +5,7 @@ export type UserInfo = {
    name: string
    tags: string[]
 }
+
 export type Members = UserInfo[]
 
 export type EmptySchedulesType = {
@@ -36,6 +37,7 @@ export const empty_schedules: EmptySchedulesType = [
       end_at: String(moment('2021-09-22T09:30:00').unix()),
    },
 ]
+
 export const matched_schedules: MatchedSchedules = [
    {
       schedule_id: 0,
@@ -47,6 +49,7 @@ export const matched_schedules: MatchedSchedules = [
       },
    },
 ]
+
 export const members: Members = [
    {
       user_id: 1,
@@ -59,6 +62,7 @@ export const members: Members = [
       tags: ['React'],
    },
 ]
+
 export const user_info: UserInfo = {
    user_id: 0,
    name: '浅原',

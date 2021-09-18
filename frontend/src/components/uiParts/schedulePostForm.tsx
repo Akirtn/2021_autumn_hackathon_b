@@ -42,12 +42,21 @@ const useStyles = makeStyles((theme) => ({
    },
 }))
 
-const SchedulePostForm: FC = (props) => {
+const SchedulePostForm: FC = () => {
    const classes = useStyles()
    const { selectUnixTime } = useContext(ScheduleContext)
    const [startTime, setStartTime] = useState(moment().format('HH:mm'))
    const [endTime, setEndTime] = useState(moment().format('HH:mm'))
-   const [openSnackBar, setOpenSnackBar] = useState<boolean>(false)
+   const [writeSchedule, setWriteSchedule] = useState({
+      message: '空き時間を投稿',
+      severity: 'success',
+      isSuccess: false,
+   })
+   const [matchSchedule, setMatchSchedule] = useState({
+      message: 'マッチングを開始',
+      severity: 'info',
+      isSuccess: false,
+   })
 
    const handleStartDateChange = (event: any) => {
       setStartTime(event.target.value)
@@ -65,10 +74,15 @@ const SchedulePostForm: FC = (props) => {
       await Api.writeSchedule(String(unixStartTime), String(unixEndTime)).then(
          (res) => {
             if (res) {
-               setOpenSnackBar(true)
+               setWriteSchedule({ ...writeSchedule, isSuccess: true })
             }
          }
       )
+   }
+   const handleMatchSchedule = async () => {
+      await Api.matchSchedule().then(() => {
+         setMatchSchedule({ ...matchSchedule, isSuccess: true })
+      })
    }
 
    return (
@@ -118,15 +132,22 @@ const SchedulePostForm: FC = (props) => {
          </form>
          <div className={classes.button}>
             <Button color="primary" onClick={handleWriteSchedule}>
-               投稿
+               {writeSchedule.message}
+            </Button>
+            <Button color="secondary" onClick={handleMatchSchedule}>
+               {matchSchedule.message}
             </Button>
          </div>
-         {openSnackBar && (
+         {writeSchedule.isSuccess && (
             <CustomizedSnackBar
-               message={'投稿しました'}
-               severity={'success'}
-               openSnackBar={openSnackBar}
-               setOpenSnackBar={setOpenSnackBar}
+               message={writeSchedule.message + 'しました'}
+               severity={writeSchedule.severity}
+            />
+         )}
+         {matchSchedule.isSuccess && (
+            <CustomizedSnackBar
+               message={matchSchedule.message + 'しました'}
+               severity={matchSchedule.severity}
             />
          )}
       </Card>

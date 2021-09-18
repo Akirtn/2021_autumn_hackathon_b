@@ -73,7 +73,7 @@ class MatchedSchedule(db.Model):
     start_time = db.Column(db.Integer(), nullable=False)
     end_time = db.Column(db.Integer(), nullable=False)
     # 予定の詳細（誰とどこでetc）
-    memo = community_name = db.Column(db.String(), nullable=False)
+    memo = db.Column(db.String(), nullable=False)
 
 
 # マッチ時間とユーザーのタグ付け

@@ -175,6 +175,54 @@ paths:
           schema:
             type: object
             properties: {}
+  /users/login:
+    parameters: []
+    post:
+      summary: ''
+      operationId: post-users-login
+      responses:
+        '200':
+          description: OK
+          schema:
+            description: ''
+            type: object
+            x-examples:
+              example-1:
+                user_id: ','
+                name: ''
+                tags: []
+            properties:
+              user_id:
+                type: string
+                minLength: 1
+              name:
+                type: string
+              tags:
+                type: array
+                items:
+                  type: string
+            required:
+              - user_id
+              - name
+              - tags
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+              password:
+                type: string
+  /users/logout:
+    parameters: []
+    delete:
+      summary: ''
+      operationId: delete-users-logout
+      responses:
+        '200':
+          description: OK
 securityDefinitions:
   API Key - 1:
     type: basic

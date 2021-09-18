@@ -3,6 +3,7 @@ import FullCalendar from '@fullcalendar/react'
 
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction'
+import listPlugin from '@fullcalendar/list'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import Paper from '@material-ui/core/Paper'
 import { makeStyles } from '@material-ui/core/styles'
@@ -37,7 +38,12 @@ const Calendar: FC = () => {
       <div className={classes.root}>
          <Paper className={classes.paper}>
             <FullCalendar
-               plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+               plugins={[
+                  dayGridPlugin,
+                  timeGridPlugin,
+                  interactionPlugin,
+                  listPlugin,
+               ]}
                initialView={'dayGridMonth'}
                locale="ja" // 日本語化
                aspectRatio={1}
@@ -47,7 +53,7 @@ const Calendar: FC = () => {
                headerToolbar={{
                   left: 'prev,today',
                   center: 'title',
-                  right: 'next',
+                  right: 'dayGridMonth,timeGridWeek,listWeek,next',
                }}
                //initialDate={}
                displayEventTime={false}

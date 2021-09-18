@@ -1,8 +1,0 @@
-{
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnSave": true, // Prettier を実行
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true // ESLint を実行
-  },
-  "eslint.workingDirectories": ["./frontend"]
-}

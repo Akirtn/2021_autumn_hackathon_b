@@ -2,7 +2,7 @@ swagger: '2.0'
 info:
   title: dena-hackathon
   version: '1.0'
-host: 'localhost:3000'
+host: 'localhost:5000'
 schemes:
   - http
 produces:

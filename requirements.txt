@@ -16,3 +16,4 @@ pycparser==2.20
 six==1.16.0
 SQLAlchemy==1.4.23
 Werkzeug==2.0.1
+psycopg2

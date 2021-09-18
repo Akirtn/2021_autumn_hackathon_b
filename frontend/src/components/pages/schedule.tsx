@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useState } from 'react'
-import ScheduleTemplate from '../templates/scheduleTemplate'
 import { useHistory, useLocation } from 'react-router-dom'
+
+import ScheduleTemplate from '../templates/scheduleTemplate'
 
 const Schedule: FC = () => {
    const location = useLocation()

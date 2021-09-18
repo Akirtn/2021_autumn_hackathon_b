@@ -27,7 +27,7 @@ export const Api = {
          .catch(function (error) {
             // handle error
             if (error.response) {
-               // レスポンスは返ってくるが 200 番台じゃない場合
+               // レスポンスは返ってくるが 200番台じゃない場合
                alert(error.response.data)
                alert(error.response.status)
                alert(error.response.headers)

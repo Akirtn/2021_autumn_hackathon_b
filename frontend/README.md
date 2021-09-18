@@ -4,7 +4,6 @@ First, run the development server:
 
 `npm run start` or `yarn start`
 
-
 # Version
 
 node v12.16.3
@@ -26,7 +25,7 @@ npm 6.14.4
 
 4・Material UI
 
--  直観的に理解できるUIにするため
+-  直観的に理解できる UI にするため
 -  デザインが決まっていて、スピーディーに開発できるため
 
 4・react-router-dom
@@ -36,55 +35,52 @@ npm 6.14.4
 5・axios
 
 -  簡潔にコードが書けるため
--  fetchライブラリと比較
-    -  jsonにパースしなくてもいい  
-    -  404や500エラーをキャッチできる
+-  fetch ライブラリと比較
+   -  json にパースしなくてもいい
+   -  404 や 500 エラーをキャッチできる
 
 6・husky + lint-staged
 
 -  コードの品質担保のため push・commit 前に lint と type-check を走らせる
 
-
 # Architecture
 
-atomicデザインとクリーンアーキテクチャライクな設計を採用した。利点として下記が挙げられる
+atomic デザインとクリーンアーキテクチャライクな設計を採用した。利点として下記が挙げられる
 
 -  変更に強いこと
 -  理解しやすいこと
 -  再利用しやすいこと
 
-今回は、そこまでコンポーネント数が多くならいことを踏まえて、以下のatomicデザインにしている
+今回は、そこまでコンポーネント数が多くならいことを踏まえて、以下の atomic デザインにしている
 
-
-src</br> 
-　　　 ├── action 
+src</br>
+　　　 ├── action
 　　　 ├── components
 　　　 ├── hooks  
 　　　 ├── mocks  
 　　　 ├── services  
-　　　 ├── types    
+　　　 ├── types  
 　　　 └── utils
 
 ### components
 
 -  UI コンポーネントを定義
 
-    #### pages
-    
-    -  page
+   #### pages
 
-    #### templates
-    
-    -  全体的なスタイル調整をする
+   -  page
 
-    #### uiParts
-    
-    -  atmos＆molecules
+   #### templates
+
+   -  全体的なスタイル調整をする
+
+   #### uiParts
+
+   -  atmos＆molecules
 
 ### hooks
 
 -  汎用的な hooks と API コールに関するカスタムフックを定義
-
 
 ### mocks
 
@@ -96,10 +92,8 @@ src</br>
 
 ### types
 
--  fetch情報など使用頻度の高いモデルの型定義
+-  fetch 情報など使用頻度の高いモデルの型定義
 
 ### utils
 
 -  全体的なスタイルを定義(primaryColor,font-famliy, margin..)
-
-

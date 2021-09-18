@@ -34,6 +34,7 @@ const CustomizedSnackBar: FC<Props> = (props) => {
       if (reason === 'clickaway') {
          return
       }
+      console.log('handleClick')
       setOpenSnackBar(false)
    }
 

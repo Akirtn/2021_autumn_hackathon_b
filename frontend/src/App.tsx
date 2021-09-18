@@ -6,19 +6,21 @@ import SignIn from './components/pages/signIn'
 
 const App: FC = () => {
    return (
-      <Router>
-         <Switch>
-            <Route exact path="/">
-               <SignIn />
-            </Route>
-            <Route exact path="/schedule">
-               <Schedule />
-            </Route>
-            <Route>
-               <NoMatch />
-            </Route>
-         </Switch>
-      </Router>
+      <div style={{ margin: '0px' }}>
+         <Router>
+            <Switch>
+               <Route exact path="/">
+                  <SignIn />
+               </Route>
+               <Route exact path="/schedule">
+                  <Schedule />
+               </Route>
+               <Route>
+                  <NoMatch />
+               </Route>
+            </Switch>
+         </Router>
+      </div>
    )
 }
 

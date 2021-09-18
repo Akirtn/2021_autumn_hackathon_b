@@ -40,7 +40,7 @@ class Community(db.Model):
 class Tag(db.Model):
     __tablename__ = "tags"
     id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
-    tag_name = db.Column(db.String(), nullable=False)
+    tag_name = db.Column(db.String(length=40), nullable=False)
 
 
 #　タグとユーザーの紐付け
@@ -73,7 +73,7 @@ class MatchedSchedule(db.Model):
     start_time = db.Column(db.Integer(), nullable=False)
     end_time = db.Column(db.Integer(), nullable=False)
     # 予定の詳細（誰とどこでetc）
-    memo = db.Column(db.String(), nullable=False)
+    memo = db.Column(db.String(length=300), nullable=False)
 
 
 # マッチ時間とユーザーのタグ付け

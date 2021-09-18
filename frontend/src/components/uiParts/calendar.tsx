@@ -1,12 +1,15 @@
 // eslint-disable-next-line import/order
 import FullCalendar from '@fullcalendar/react'
-
+import moment from 'moment'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import Paper from '@material-ui/core/Paper'
 import { makeStyles } from '@material-ui/core/styles'
-import React, { useEffect, useState, useContext, FC, memo } from 'react'
+import React, { useState, useContext, FC, memo } from 'react'
+import { ScheduleContext } from '../pages/schedule'
+import { MatchedSchedule } from '../../mocks/fetchData'
+import { DateDomainService } from '../../services/DateDomainService'
 
 const useStyles = makeStyles((theme) => ({
    root: {
@@ -30,8 +33,11 @@ const useStyles = makeStyles((theme) => ({
    },
 }))
 
+const dateDomainService = new DateDomainService()
+
 const Calendar: FC = () => {
    const classes = useStyles()
+   const { matchedSchedules } = useContext(ScheduleContext)
 
    return (
       <div className={classes.root}>
@@ -49,9 +55,19 @@ const Calendar: FC = () => {
                   center: 'title',
                   right: 'next',
                }}
-               //initialDate={}
                displayEventTime={false}
                weekends={true}
+               events={matchedSchedules.map((schedule: MatchedSchedule) => {
+                  return {
+                     title: schedule.matched_member.name,
+                     start: dateDomainService.changeUnixTimeToFormattedString(
+                        schedule.start_at
+                     ),
+                     end: dateDomainService.changeUnixTimeToFormattedString(
+                        schedule.end_at
+                     ),
+                  }
+               })}
             />
          </Paper>
       </div>

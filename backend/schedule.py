@@ -2,9 +2,7 @@ import http
 from flask import Blueprint,request,jsonify
 from flask.helpers import locked_cached_property
 from flask.wrappers import Response
-from . import db
 from flask_login import login_user, logout_user, login_required,current_user
-from .models import User, Schedule, Community
 
 schdule = Blueprint('schedule', __name__)
 
@@ -29,7 +27,6 @@ def register_schdule():
     end_time=json["end_time"]
 
     user_id=current_user.id
-    json=request.json()
     schedule_id = 0
     # TODO return value
     return jsonify({"schedule_id":schedule_id}),http.HTTPStatus.OK

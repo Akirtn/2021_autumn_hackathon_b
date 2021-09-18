@@ -81,7 +81,7 @@ paths:
                       type: string
                     end_at:
                       type: string
-                    matched_friend:
+                    matched_member:
                       type: object
                       properties:
                         user_id:
@@ -95,21 +95,21 @@ paths:
         '200':
           description: OK
           schema:
-              type: object
-              properties:
-                  schedule_id:
+            type: object
+            properties:
+              schedule_id:
+                type: integer
+              start_at:
+                type: integer
+              end_at:
+                type: integer
+              matched_member:
+                type: object
+                properties:
+                  user_id:
                     type: integer
-                  start_at:
-                    type: integer
-                  end_at:
-                    type: integer
-                  matched_friend:
-                    type: object
-                    properties:
-                      user_id:
-                        type: integer
-                      name:
-                        type: string
+                  name:
+                    type: string
       security:
         - API Key - 1: []
       parameters: []
@@ -125,7 +125,7 @@ paths:
       responses:
         '200':
           description: OK
-  /users/friends:
+  /users/members:
     parameters: []
     get:
       summary: ''
@@ -136,33 +136,45 @@ paths:
           schema:
             description: ''
             type: object
+            x-examples:
+              example-1:
+                members:
+                  - user_id: 0
+                    name: string
             properties:
-              friends:
+              members:
                 type: array
                 uniqueItems: true
                 minItems: 1
                 items:
-                  required:
-                    - friend_id
-                    - name
+                  type: object
                   properties:
-                    friend_id:
+                    user_id:
                       type: number
                     name:
                       type: string
                       minLength: 1
+                    tags:
+                      type: array
+                      items:
+                        type: string
+                  required:
+                    - user_id
+                    - name
             required:
-              - friends
-            x-examples:
-              example-1:
-                friends:
-                  - friend_id: 0
-                    name: string
+              - members
           examples:
             example-1:
-              friends:
-                - friend_id: 0
+              members:
+                - user_id: 0
                   name: string
+                  tags:
+                    - string
+        '201':
+          description: Created
+          schema:
+            type: object
+            properties: {}
 securityDefinitions:
   API Key - 1:
     type: basic

@@ -28,17 +28,17 @@ export const Api = {
             // handle error
             if (error.response) {
                // レスポンスは返ってくるが 200 番台じゃない場合
-               console.log(error.response.data)
-               console.log(error.response.status)
-               console.log(error.response.headers)
+               alert(error.response.data)
+               alert(error.response.status)
+               alert(error.response.headers)
             } else if (error.request) {
                // レスポンスがない場合
-               console.log(error.request)
+               alert(error.request)
             } else {
                // それ以外
-               console.log('Error', error.message)
+               alert(error.message)
             }
-            console.log(error.config)
+            alert(error.config)
          })
    },
 }

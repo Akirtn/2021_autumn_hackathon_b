@@ -1,23 +1,55 @@
 import moment from 'moment'
 
-export const empty_schedules = [
+export type UserInfo = {
+   user_id: number
+   name: string
+   tags: string[]
+}
+
+export type Members = UserInfo[]
+
+export type EmptySchedulesType = {
+   schedule_id: number
+   start_at: string
+   end_at: string
+}[]
+
+export type MatchedSchedule = {
+   schedule_id: number
+   start_at: string
+   end_at: string
+   matched_member: {
+      user_id: number
+      name: string
+   }
+}
+
+export type MatchedSchedules = {
+   matched_member: {
+      user_id: number
+      name: string
+   }
+}[] &
+   EmptySchedulesType
+
+export const empty_schedules: EmptySchedulesType = [
    {
       schedule_id: 0,
-      start_at: moment('2021-09-21T09:30:00').unix(),
-      end_at: moment('2021-09-21T09:30:00').unix(),
+      start_at: String(moment('2021-09-21T09:30:00').unix()),
+      end_at: String(moment('2021-09-21T09:30:00').unix()),
    },
    {
       schedule_id: 0,
-      start_at: moment('2021-09-22T09:30:00').unix(),
-      end_at: moment('2021-09-22T09:30:00').unix(),
+      start_at: String(moment('2021-09-22T09:30:00').unix()),
+      end_at: String(moment('2021-09-22T09:30:00').unix()),
    },
 ]
 
-export const matched_schedules = [
+export const matched_schedules: MatchedSchedules = [
    {
       schedule_id: 0,
-      start_at: moment('2021-09-22T09:30:00').unix(),
-      end_at: moment('2021-09-22T10:00:00').unix(),
+      start_at: String(moment('2021-09-22T09:30:00').unix()),
+      end_at: String(moment('2021-09-22T10:00:00').unix()),
       matched_member: {
          user_id: 0,
          name: 'asahara',
@@ -25,7 +57,7 @@ export const matched_schedules = [
    },
 ]
 
-export const members = [
+export const members: Members = [
    {
       user_id: 1,
       name: '吉田',
@@ -38,7 +70,7 @@ export const members = [
    },
 ]
 
-export const user_info = {
+export const user_info: UserInfo = {
    user_id: 0,
    name: '浅原',
    tags: ['React'],

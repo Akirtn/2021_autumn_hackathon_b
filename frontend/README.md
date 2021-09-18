@@ -76,7 +76,6 @@ src</br>
     #### templates
     
     -  全体的なスタイル調整をする
-    -  ロジック周りもここで行う(本来はorganisms)
 
     #### uiParts
     

@@ -36,26 +36,42 @@ class Community(db.Model):
     domain_addr = db.Column(db.String(length=50), nullable=False)
 
 
-# 友達の情報
-class Friend(db.Model):
-    __tablename__ = "friends"
+# タグの情報
+class Tag(db.Model):
+    __tablename__ = "tags"
     id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
-    user_id = db.Column(db.String(), db.ForeignKey("users.id"), nullable=False)
-    # 友達グループの番号
-    friend_id = db.Column(db.Integer(), nullable=False)
+    tag_name = db.Column(db.String(), nullable=False)
+
+
+#　タグとユーザーの紐付け
+class TagTable(db.Model):
+    __tablename__ = "tagtable"
+    id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
+    user_id = db.Column(db.Integer(), db.ForeignKey("users.id"),nullable=False)
+    tag_id = db.Column(db.Integer(), db.ForeignKey("tags.id"),nullable=False)
 
 
 # 空き時間の情報
-class Schedule(db.Model):
-    __tablename__ = "schedules"
+class EmptySchedule(db.Model):
+    __tablename__ = "emptyschedules"
     id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer(),db.ForeignKey("users.id"),nullable=False)
-    # 空き時間: start~end
-    start_time = db.Column(db.DATETIME(), nullable=False)
-    end_time = db.Column(db.DATETIME(), nullable=False)
+    # 空き時間: start~end(unixtime)
+    start_time = db.Column(db.Integer(), nullable=False)
+    end_time = db.Column(db.Integer(), nullable=False)
 
     # datetime('YYYY-MM-DD HH:MM:SS')をunixtime(float)に変換する 
-    def date_to_unix(self, d_time):
-        return d_time.timestamp()
+    # def date_to_unix(self, d_time):
+    #     return d_time.timestamp()
 
 
+class MatchedSchedule(db.Model):
+    __tablename__ = "matchedschedules"
+    id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
+    # マッチしたフレンドの情報
+    fried_id = db.Column(db.Integer(),db.ForeignKey("friends.id"),nullable=False)
+    # マッチした時間帯: start~end（Max1時間）(unixtime)
+    start_time = db.Column(db.Integer(), nullable=False)
+    end_time = db.Column(db.Integer(), nullable=False)
+    # 予定の詳細（誰とどこでetc）
+    memo = community_name = db.Column(db.String(), nullable=False)

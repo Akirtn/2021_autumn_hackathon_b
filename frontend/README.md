@@ -71,7 +71,7 @@ src</br>
 
     #### pages
     
-    -  ページコンポーネント
+    -  page
 
     #### templates
     

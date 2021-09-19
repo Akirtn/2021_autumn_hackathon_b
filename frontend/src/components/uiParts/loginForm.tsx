@@ -11,8 +11,11 @@ import Loading from '../Loading'
 
 const useStyles = makeStyles((theme) => ({
    form: {
-      height: window.innerHeight * 0.5,
       textAlign: 'center',
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%,-50%)',
    },
    button: {
       marginTop: theme.spacing(2),

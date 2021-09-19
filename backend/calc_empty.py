@@ -150,7 +150,7 @@ def calc_empty_schedule_humans(base_user_id,input_dict):
     #全ての入隊室を最初のを基準に時間のリストとする
     work_start_time = user_a_s[0]
     #検索期間の設定
-    search_period  =datetime.timedelta(days=1)
+    search_period  =datetime.timedelta(days=7)
     end =work_start_time+search_period
     hours=int(days_to_half_hours(search_period,time_span,hour))
 

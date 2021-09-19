@@ -1,7 +1,9 @@
-from flask import Flask
+import http
+from flask import Flask,Response
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager 
+from flask_login import LoginManager,config 
 from flask_migrate import Migrate 
+from flask_cors import CORS
 from flask_bcrypt import Bcrypt
 import os
 # init SQLAlchemy so we can use it later in our models
@@ -9,7 +11,7 @@ db = SQLAlchemy()
 bcrypt = None
 def create_app():
     global bcrypt
-
+    config.COOKIE_HTTPONLY=False
     app = Flask(__name__)
 
     app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY",default="secret")
@@ -24,6 +26,9 @@ def create_app():
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
 
+    @login_manager.unauthorized_handler
+    def unauthrized():
+        return 'Unauthrized!!!',400
     from .models import User
 
     @login_manager.user_loader
@@ -42,5 +47,14 @@ def create_app():
     # blueprint for non-auth parts of app
     from .schedule import schdule as schdule_blueprint
     app.register_blueprint(schdule_blueprint)
+
+    # CORS(app, resources={"/*": {"origins": "*"}})
+
+    @app.after_request
+    def after_request(response):
+        # response.headers.add('Access-Control-Allow-Origin', '*')
+        # response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+        # response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+        return response
 
     return app

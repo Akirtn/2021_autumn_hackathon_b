@@ -124,8 +124,8 @@ def user_tags_get(user_info):
     output: res_array: array
     """
     q=db.session.query(Tag,TagTable).join(Tag, TagTable.user_id==user_info.id).all()
-    res_array=[t.tag_name for t in q]
-    return res_array
+    res_array=[t.tag_name for t,_ in q]
+    return list(set(res_array))
 
 
 # /users/matched_schedule/ [POST]で呼ばれる 

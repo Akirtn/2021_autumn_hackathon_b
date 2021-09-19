@@ -2,6 +2,8 @@ import Avatar from '@material-ui/core/Avatar'
 import { makeStyles, Theme } from '@material-ui/core/styles'
 import React, { FC } from 'react'
 
+import Themes from '../../utils/theme'
+
 type Props = {
    name: string
    avatarSize: MakeProps
@@ -14,6 +16,8 @@ type MakeProps = {
 
 const useStyles = makeStyles<Theme, MakeProps>((theme) => ({
    root: {
+      fontFamily: Themes.font.fontFamily,
+      fontWeight: 'bold',
       display: 'flex',
       '& > *': {
          margin: theme.spacing(1),

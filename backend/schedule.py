@@ -3,7 +3,7 @@ from flask import Blueprint,request,jsonify
 from flask.helpers import locked_cached_property
 from flask.wrappers import Response
 from flask_login import login_user, logout_user, login_required
-from .wrapper import users_empty_schedule_get, users_empty_schedule_post, users_matched_schedule_get, users_matched_schedule_save
+from .wrapper import delete_empty_schedule, find_matched_result, users_empty_schedule_get, users_empty_schedule_post, users_matched_schedule_get, users_matched_schedule_save
 from .models import Tag, TagTable, User,Community,EmptySchedule,MatchedSchedule
 from . import db,bcrypt
 from .wrapper import get_CurrentUser
@@ -54,8 +54,9 @@ def register_matched_schdule():
     # TODO
     # users_matched_schedule_save(current_user.id)
     # TODO：intか確認
-    
-    retvalue={"matched_schedule":{"schedule_id":0,"start_at":0,"end_at":0,"matched_member":{"user_id":0,"name":"kkk"} } }
+    uid,matched_user_id,start_time=find_matched_result(get_CurrentUser())
+    users_matched_schedule_save(uid,start_time,30*60,matched_user_id)
+    delete_empty_schedule(uid,matched_user_id,start_time)    
     return Response(status=200)
 
 def g_pass(passwd):

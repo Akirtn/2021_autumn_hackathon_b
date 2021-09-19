@@ -55,8 +55,9 @@ def register_matched_schdule():
     # users_matched_schedule_save(current_user.id)
     # TODO：intか確認
     uid,matched_user_id,start_time=find_matched_result(get_CurrentUser())
-    users_matched_schedule_save(uid,start_time,30*60,matched_user_id)
-    delete_empty_schedule(uid,matched_user_id,start_time)    
+    if uid is not None:    
+        users_matched_schedule_save(uid,start_time,30*60,matched_user_id)
+        delete_empty_schedule(uid,matched_user_id,start_time)
     return Response(status=200)
 
 def g_pass(passwd):

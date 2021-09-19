@@ -113,7 +113,7 @@ paths:
       security:
         - API Key - 1: []
       parameters: []
-  '/users/empty_schedule/{schedule_id}':
+  '/users/empty_schedule/{schedule_id}/':
     parameters:
       - type: string
         name: schedule_id
@@ -125,7 +125,7 @@ paths:
       responses:
         '200':
           description: OK
-  /users/members:
+  /users/members/:
     parameters: []
     get:
       summary: ''
@@ -175,7 +175,7 @@ paths:
           schema:
             type: object
             properties: {}
-  /users/login:
+  /users/login/:
     parameters: []
     post:
       summary: ''
@@ -215,7 +215,7 @@ paths:
                 type: string
               password:
                 type: string
-  /users/logout:
+  /users/logout/:
     parameters: []
     delete:
       summary: ''

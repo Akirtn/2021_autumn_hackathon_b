@@ -32,6 +32,7 @@ def users_empty_schedule_post(user_id, start_time, end_time):
     db.session.commit()
     return schedule.id
 
+
 def users_matched_schedule_get(user_info):
     """
     '/users/matched_schedule/', methods=['GET']
@@ -39,27 +40,36 @@ def users_matched_schedule_get(user_info):
     output: res_dic: Dict
     if not match, res_dic[matched_schedules] is [{}]
     """
-    res_dic = {}
-    info_dic = {}
-    flag = False
-    matched_s = db.session.query(MatchedSchedule, MatchedTable).join(
-                    MatchedSchedule, MatchedTable.user1_id==user_info.id).first()
-    if not matched_s:
-        flag = False
-        matched_s = db.session.query(MatchedSchedule, MatchedTable).join(
-                    MatchedSchedule, MatchedTable.user2_id==user_info.id).first()
-    if matched_s:
-        schedule, table = matched_s
-        info_dic["schedule_id"] = schedule.id
-        info_dic["start_at"] = str(schedule.start_time)
-        info_dic["end_at"] = str(schedule.end_time)
-        info_dic["matched_member"] = {}
-        pair_user_id = table.user2_id if flag else table.user1_id
-        pair_user = db.session.query(User).filter_by(id=pair_user_id).first()
-        info_dic["matched_member"]["user_id"] = pair_user.id
-        info_dic["matched_member"]["name"] = pair_user.user_name
+    def get_schedule_info(matched_data, is_user1):
+        """
+        input: matched_data: List[MatchedTable], is_user1: bool
+        output: List
+        """
+        lst = []
+        for data in matched_data:
+            info_dic = {}
+            schedule = db.session.query(MatchedSchedule).filter_by(id=data.info).first()
+            schedule, table = matched_s
+            info_dic["schedule_id"] = schedule.id
+            info_dic["start_at"] = str(schedule.start_time)
+            info_dic["end_at"] = str(schedule.end_time)
+            info_dic["matched_member"] = {}
+            pair_user_id = data.user2_id if is_user1 else data.user1_id
+            pair_user = db.session.query(User).filter_by(id=pair_user_id).first()
+            info_dic["matched_member"]["user_id"] = pair_user.id
+            info_dic["matched_member"]["name"] = pair_user.user_name
+            lst.append(info_dic)
+        return lst
 
-    res_dic["matched_schedules"] = [info_dic]
+    res_dic = {}
+    info_lst = []
+    matched_data1 = db.session.query(MatchedTable).filter_by(user1_id=user_info.id).all()
+    if matched_data1:
+        info_lst += get_schedule_info(matched_data1, True)
+    matched_data2 = db.session.query(MatchedTable).filter_by(user1_id=user_info.id).all()
+    if matched_data2:
+        info_lst += get_schedule_info(matched_data2, False)
+    res_dic["matched_schedules"] = info_lst
     return res_dic
 
 
@@ -82,20 +92,6 @@ def users_matched_schedule_save(user_id, start_at, end_at,
     db.session.commit()
 
 
-""" この関数はもう使わない。マッチした時点でバックエンド側で消す。
-def users_empty_schedule_delete(user_id, schedule_id):
-
-    # '/users/empty_schedule/{schedule_id}', methods=['DELETE']
-    # input: user_id: Int, schedule_id: Int
-    # output: None
-
-    target_table, _ = db.session.query(MatchedTable, MatchedSchedule).join(MatchedTable, MatchedSchedule.id==schedule_id).first()
-    # 親が削除されれば子も削除される
-    db.session.delete(target_table)
-    db.session.commit()
-"""
-
-
 def users_members(user_info):
     """
     '/users/members', methods=['GET']
@@ -111,12 +107,14 @@ def users_members(user_info):
         info_dic["user_id"] = user.id
         info_dic["user_name"] = user.user_name
         info_dic["tags"] = []
-        tags = db.session.query(Tag, TagTable).join(Tag, TagTable.user_id==user.id).all()
-        for tag, _tagtable in tags:
-            info_dic["tags"].append(tag.tag_name)
+        tags = db.session.query(TagTable).filter_by(user_id=user.id).all()
+        for tag in tags:
+            tag_info = db.session.query(Tag).filter_by(id=tag.tag_id).first()
+            info_dic["tags"].append(tag_info.tag_name)
         info_lst.append(info_dic)
     res_dic["members"] = info_lst
     return res_dic
+
 
 def user_tags_get(user_info):
     """

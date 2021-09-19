@@ -28,8 +28,7 @@ def create_app():
 
     @login_manager.unauthorized_handler
     def unauthrized():
-        return Response(status=http.HTTPStatus.BAD_REQUEST)
-
+        return 'Unauthrized!!!',400
     from .models import User
 
     @login_manager.user_loader

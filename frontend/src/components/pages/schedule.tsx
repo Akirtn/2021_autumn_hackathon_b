@@ -51,47 +51,30 @@ const Schedule: FC = () => {
       // console.log(location.state)
       Api.getMatchedSchedule().then((res: any) => {
          if (res) {
-            setMatchedSchedules(res)
+            setMatchedSchedules(res.matched_schedules)
          }
       })
       Api.getEmptySchedule().then((res: any) => {
          if (res) {
-            setEmptySchedules(res)
+            setEmptySchedules(res.empty_schedules)
          }
       })
 
       Api.getMembers().then((res: any) => {
          if (res) {
-            setMemberList(res)
+            setMemberList(res.members)
          }
       })
-      if (!userInfo && localStorage.getItem('userInfo')) {
+      if (localStorage.getItem('userInfo')) {
          const getUserjson: any = localStorage.getItem('userInfo')
          console.log(getUserjson)
-         console.log('aaa')
          const getUser: any = JSON.parse(getUserjson)
          console.log(getUser)
          setUserInfo(getUser)
-         Api.getMatchedSchedule().then((res: any) => {
-            if (res) {
-               setMatchedSchedules(res)
-            }
-         })
-         Api.getEmptySchedule().then((res: any) => {
-            if (res) {
-               setEmptySchedules(res)
-            }
-         })
-         Api.getMembers().then((res: any) => {
-            if (res) {
-               setMemberList(res)
-            }
-         })
       } else {
          history.push({ pathname: '/' })
       }
    }, [])
-
    // ここにユーザ情報入ってます
    console.log({ userInfo, emptySchedules, matchedSchedules, memberList })
    return (

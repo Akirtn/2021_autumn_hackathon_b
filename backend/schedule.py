@@ -2,63 +2,67 @@ import http
 from flask import Blueprint,request,jsonify
 from flask.helpers import locked_cached_property
 from flask.wrappers import Response
-from flask_login import login_user, logout_user, login_required,current_user
+from flask_login import login_user, logout_user, login_required
 from .wrapper import users_empty_schedule_get, users_empty_schedule_post, users_matched_schedule_get, users_matched_schedule_save
 from .models import Tag, TagTable, User,Community,EmptySchedule,MatchedSchedule
 from . import db,bcrypt
+from .wrapper import get_CurrentUser
 schdule = Blueprint('schedule', __name__)
 
 @schdule.route('/')
 def index():
     return 'Index'
 
+
+
 @schdule.route('/users/empty_schedule/',methods=['GET'])
-@login_required
+# @login_required
 def get_schdule():
-    ret_value=users_empty_schedule_get(current_user)
+    ret_value=users_empty_schedule_get(get_CurrentUser())
     return jsonify(ret_value),http.HTTPStatus.OK
 
 
 @schdule.route('/users/empty_schedule/',methods=['POST'])
-@login_required
+# @login_required
 def register_schdule():
     json=request.json()
     start_time=json["start_time"]
     end_time=json["end_time"]
 
-    user_id=current_user.id
+    user_id=get_CurrentUser().id
 
     schedule_id = users_empty_schedule_post(user_id,start_time,end_time)
     # TODO return value
     return jsonify({"schedule_id":schedule_id}),http.HTTPStatus.OK
 
 @schdule.route('/users/empty_schedule/<int:schedule_id>',methods=['DELETE'])
-@login_required
+# @login_required
 def delete_schdule(schedule_id):
     # TODO：user_idとschedule_idがあっているか確認してから削除
     return Response(status=http.HTTPStatus.BAD_REQUEST)
 
 @schdule.route('/users/matched_schedule/',methods=['GET'])
-@login_required
+# @login_required
 def get_matched_schdule():
-    res=users_matched_schedule_get(current_user)
+    res=users_matched_schedule_get(get_CurrentUser())
     return jsonify(res)
 
 @schdule.route('/users/matched_schedule/',methods=['POST'])
-@login_required
+# @login_required
 def register_matched_schdule():
-    user_id=current_user.id
+    user_id=get_CurrentUser().id
     # TODO
     # users_matched_schedule_save(current_user.id)
     # TODO：intか確認
+    
     retvalue={"matched_schedule":{"schedule_id":0,"start_at":0,"end_at":0,"matched_member":{"user_id":0,"name":"kkk"} } }
     return Response(status=200)
 
 def g_pass(passwd):
     return bcrypt.generate_password_hash(
             passwd).decode('utf-8')
-def addcommit(o):
 
+def addcommit(o):
     db.session.add(o)
     db.session.commit()
 

@@ -3,9 +3,6 @@ from flask_login import UserMixin
 from . import db
 from . import bcrypt
 
-import datetime
-
-
 # ユーザ情報
 class User(db.Model,UserMixin):
     __tablename__= 'users'

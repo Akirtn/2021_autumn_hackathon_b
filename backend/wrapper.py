@@ -1,6 +1,9 @@
 from . import db
 from .models import User, Community, TagTable, Tag, MatchedSchedule, MatchedTable,EmptySchedule
 
+def get_CurrentUser():
+    user=db.session.query(User).filter_by(user_id=1).first()
+    return user
 
 def users_empty_schedule_get(user_info):
     """

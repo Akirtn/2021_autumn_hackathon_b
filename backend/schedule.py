@@ -25,7 +25,7 @@ def get_schdule():
 @schdule.route('/users/empty_schedule/',methods=['POST'])
 # @login_required
 def register_schdule():
-    json=request.json()
+    json=request.json
     start_time=json["start_time"]
     end_time=json["end_time"]
 

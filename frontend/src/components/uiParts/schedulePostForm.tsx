@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 
 const SchedulePostForm: FC = () => {
    const classes = useStyles()
-   const { selectUnixTime } = useContext(ScheduleContext)
+   const { selectUnixTime, setEmptySchedules } = useContext(ScheduleContext)
    const [startTime, setStartTime] = useState(moment().format('HH:mm'))
    const [endTime, setEndTime] = useState(moment().format('HH:mm'))
    const [writeSchedule, setWriteSchedule] = useState({
@@ -72,9 +72,11 @@ const SchedulePostForm: FC = () => {
          moment(selectUnixTime).format(`YYYY/MM/DD ${endTime}`)
       ).unix()
       await Api.writeSchedule(String(unixStartTime), String(unixEndTime)).then(
-         (res) => {
+         async (res) => {
             if (res) {
                setWriteSchedule({ ...writeSchedule, isSuccess: true })
+               const updatedEmptySchedules = await Api.getEmptySchedule()
+               setEmptySchedules(updatedEmptySchedules)
             }
          }
       )

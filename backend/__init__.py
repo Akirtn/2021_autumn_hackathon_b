@@ -1,7 +1,7 @@
 import http
 from flask import Flask,Response
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager 
+from flask_login import LoginManager,config 
 from flask_migrate import Migrate 
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt
@@ -11,7 +11,7 @@ db = SQLAlchemy()
 bcrypt = None
 def create_app():
     global bcrypt
-
+    config.COOKIE_HTTPONLY=False
     app = Flask(__name__)
 
     app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY",default="secret")
@@ -28,8 +28,7 @@ def create_app():
 
     @login_manager.unauthorized_handler
     def unauthrized():
-        return Response(status=http.HTTPStatus.BAD_REQUEST)
-
+        return 'Unauthrized!!!',400
     from .models import User
 
     @login_manager.user_loader

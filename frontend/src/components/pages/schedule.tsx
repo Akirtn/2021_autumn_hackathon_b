@@ -59,7 +59,7 @@ const Schedule: FC = () => {
    const location = useLocation()
 
    // ここにユーザ情報入ってます
-   console.log(location.state)
+   //console.log(location.state)
    return (
       <div>
          <ScheduleContext.Provider

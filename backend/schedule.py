@@ -3,6 +3,7 @@ from flask import Blueprint,request,jsonify,render_template
 from flask.helpers import locked_cached_property, url_for
 from flask.wrappers import Response
 from flask_login import login_user, logout_user, login_required
+from sqlalchemy.sql.visitors import replacement_traverse
 from .wrapper import delete_empty_schedule, find_matched_result, users_empty_schedule_get, users_empty_schedule_post, users_matched_schedule_get, users_matched_schedule_save
 from .models import Tag, TagTable, User,Community,EmptySchedule,MatchedSchedule
 from . import db,bcrypt
@@ -18,7 +19,20 @@ def index():
 @schdule.route('/users/empty_schedule/',methods=['GET'])
 # @login_required
 def get_schdule():
-    ret_value=users_empty_schedule_get(get_CurrentUser())
+    # ret_value=users_empty_schedule_get(get_CurrentUser())
+    ret_value={
+  "matched_schedules": [
+    {
+      "schedule_id": 3,
+      "start_at": "1632036660",
+      "end_at": str(1632036660+30*60),
+      "matched_member": {
+        "user_id": 2,
+        "name": "string"
+      }
+    }
+  ]
+}
     return jsonify(ret_value),http.HTTPStatus.OK
 
 
@@ -54,10 +68,10 @@ def register_matched_schdule():
     # TODO
     # users_matched_schedule_save(current_user.id)
     # TODO：intか確認
-    uid,matched_user_id,start_time=find_matched_result(get_CurrentUser())
-    if uid is not None:    
-        users_matched_schedule_save(uid,start_time,30*60,matched_user_id)
-        delete_empty_schedule(uid,matched_user_id,start_time)
+    # uid,matched_user_id,start_time=find_matched_result(get_CurrentUser())
+    # if uid is not None:    
+    #     users_matched_schedule_save(uid,start_time,30*60,matched_user_id)
+    #     delete_empty_schedule(uid,matched_user_id,start_time)
     return Response(status=200)
 
 def g_pass(passwd):

@@ -49,6 +49,7 @@ export const Api = {
          })
          .then(function (response) {
             // handle success
+            localStorage.setItem('user', response.data)
             return response.data
          })
          .catch(function (error) {

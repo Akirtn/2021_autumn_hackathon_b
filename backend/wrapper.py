@@ -1,5 +1,6 @@
 from . import db
 from .models import User, Community, TagTable, Tag, MatchedSchedule, MatchedTable,EmptySchedule
+from .calc_empty import calc_empty_schedule_humans
 
 
 def users_empty_schedule_get(user_info):
@@ -125,3 +126,52 @@ def user_tags_get(user_info):
     q=db.session.query(Tag,TagTable).join(Tag, TagTable.user_id==user_info.id).all()
     res_array=[t.tag_name for t in q]
     return res_array
+
+
+# /users/matched_schedule/ [POST]で呼ばれる 
+def find_matched_result(user_info):
+    """
+    input: user_info: User
+    output: user_id: Int, matched_user_id: Int, matched_start_time: Int
+    """
+    community_id = user_info.community_id
+    # そのユーザーが持つ全てのタグに対してそのタグを持つユーザーを調べる
+    dic = {}  # {tag_id: List[users]}
+    tagtables = db.session.query(TagTable).filter_by(user_id=user_info.id).all()
+    for tagtable in tagtables:
+        tables = db.session.query(TagTable).filter_by(tag_id=tagtable.tag_id).all()
+        dic[tagtable.tag_id] = tables
+    # 同じコミュニティーかつ同じタグを持つユーザーのid
+    candidate_lst = []
+    for tag_id, table in dic.items():
+        user = db.session.query(User).filter_by(id=table.user_id).first()
+        if user.community_id == community_id:
+            if not user.id in candidate_lst:
+                candidate_lst.append(user.id)
+    # 空き時間を探索する
+    input_dic = {}
+    for user_id in candidate_lst:
+        empty_schedules = db.session.query(EmptySchedule).filter_by(user_id=user_id).all()
+        input_dic[user_id] = {"xxx_times": []}
+        for empty_schedule in empty_schedules:
+            input_dic[user_id]["xxx_times"].append(
+                {"start_at": empty_schedule.start_time, "ends_at": empty_schedule.end_time})
+    matched_users, matched_start_time = calc_empty_schedule_humans(input_dic, user_info.id)
+    matched_user_id = matched_users[0] if matched_users[0] != user_info.id else matched_users[1]
+    return user_info.id, matched_user_id, matched_start_time
+
+
+def delete_empty_schedule(user1_id, user2_id, start_time):
+
+    def delete_user_empty_schedule(user_id, start_time):
+        end_time = start_time + 30 * 60
+        target_schedules = db.session.query(EmptySchedule).filter(
+                            start_time <= EmptySchedule.start_time, EmptySchedule.end_time <= end_time).filter(
+                            EmptySchedule.user_id == user_id).all()
+        # テーブルから削除
+        for target_schedule in target_schedules:
+            db.session.delete(target_schedule)
+            db.session.commit()
+
+    delete_user_empty_schedule(user1_id, start_time)
+    delete_user_empty_schedule(user2_id, start_time)

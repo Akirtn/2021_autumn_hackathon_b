@@ -65,21 +65,27 @@ const SchedulePostForm: FC = () => {
       setEndTime(event.target.value)
    }
    const handleWriteSchedule = async () => {
+      console.log(startTime)
+      console.log(moment(selectUnixTime).format(`YYYY/MM/DD${startTime}`))
       const unixStartTime = moment(
-         moment(selectUnixTime).format(`YYYY/MM/DD ${startTime}`)
+         moment(selectUnixTime * 1000).format(`YYYY/MM/DD ${startTime}`)
       ).unix()
       const unixEndTime = moment(
-         moment(selectUnixTime).format(`YYYY/MM/DD ${endTime}`)
+         moment(selectUnixTime * 1000).format(`YYYY/MM/DD ${endTime}`)
       ).unix()
+      console.log(unixStartTime, unixEndTime)
       await Api.writeSchedule(String(unixStartTime), String(unixEndTime)).then(
          async (res) => {
             if (res) {
                setWriteSchedule({ ...writeSchedule, isSuccess: true })
-               const updatedEmptySchedules = await Api.getEmptySchedule()
-               setEmptySchedules(updatedEmptySchedules)
             }
          }
       )
+      await Api.getEmptySchedule().then((res: any) => {
+         if (res) {
+            setEmptySchedules(res.empty_schedules)
+         }
+      })
    }
    const handleMatchSchedule = async () => {
       await Api.matchSchedule().then(() => {

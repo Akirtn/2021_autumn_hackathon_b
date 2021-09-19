@@ -8,11 +8,13 @@ export type UserInfo = {
 
 export type Members = UserInfo[]
 
-export type EmptySchedulesType = {
+export type EmptySchedule = {
    schedule_id: number
    start_at: string
    end_at: string
-}[]
+}
+
+export type EmptySchedulesType = EmptySchedule[]
 
 export type MatchedSchedule = {
    schedule_id: number

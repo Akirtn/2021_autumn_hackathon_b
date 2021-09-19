@@ -67,7 +67,7 @@ const Calendar: FC = () => {
                headerToolbar={{
                   left: 'prev',
                   center: 'title',
-                  right: 'dayGridMonth,timeGridWeek, next',
+                  right: 'dayGridMonth,timeGridWeek,next',
                }}
                select={handleSelect}
                events={[

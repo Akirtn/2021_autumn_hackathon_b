@@ -157,12 +157,14 @@ def find_matched_result(user_info):
         empty_schedules = db.session.query(EmptySchedule).filter_by(user_id=user_id).all()
         input_dic[user_id] = {"xxx_times": []}
         for empty_schedule in empty_schedules:
-            input_dic[user_id]["xxx_times"].append(
+            input_dic[str(user_id)]["xxx_times"].append(
                 {"start_at": empty_schedule.start_time, "ends_at": empty_schedule.end_time})
     print(input_dic)
     print(user_info.id)
     matched_users, matched_start_time = calc_empty_schedule_humans(input_dic, user_info.id)
-    matched_user_id = matched_users[0] if matched_users[0] != user_info.id else matched_users[1]
+    if not matched_users:
+        return None, None, None
+    matched_user_id = int(matched_users[0]) if int(matched_users[0]) != user_info.id else int(matched_users[1])
     return user_info.id, matched_user_id, matched_start_time
 
 

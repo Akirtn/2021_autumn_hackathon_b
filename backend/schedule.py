@@ -9,9 +9,9 @@ from . import db,bcrypt
 from .wrapper import get_CurrentUser
 schdule = Blueprint('schedule', __name__)
 
-@schdule.route('/')
-def index():
-    return 'Index'
+# @schdule.route('/')
+# def index():
+#     return 'Index'
 
 
 

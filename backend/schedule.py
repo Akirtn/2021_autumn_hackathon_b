@@ -19,20 +19,8 @@ def index():
 @schdule.route('/users/empty_schedule/',methods=['GET'])
 # @login_required
 def get_schdule():
-    # ret_value=users_empty_schedule_get(get_CurrentUser())
-    ret_value={
-  "matched_schedules": [
-    {
-      "schedule_id": 3,
-      "start_at": "1632036660",
-      "end_at": str(1632036660+30*60),
-      "matched_member": {
-        "user_id": 2,
-        "name": "string"
-      }
-    }
-  ]
-}
+    ret_value=users_empty_schedule_get(get_CurrentUser())
+
     return jsonify(ret_value),http.HTTPStatus.OK
 
 
@@ -58,8 +46,21 @@ def delete_schdule(schedule_id):
 @schdule.route('/users/matched_schedule/',methods=['GET'])
 # @login_required
 def get_matched_schdule():
-    res=users_matched_schedule_get(get_CurrentUser())
-    return jsonify(res)
+    # res=users_matched_schedule_get(get_CurrentUser())
+    ret={
+        "matched_schedules": [
+            {
+            "schedule_id": 3,
+            "start_at": "1632036660",
+            "end_at": str(1632036660+30*60),
+            "matched_member": {
+                "user_id": 2,
+                "name": "string"
+            }
+            }
+        ]
+    }
+    return jsonify(ret)
 
 @schdule.route('/users/matched_schedule/',methods=['POST'])
 # @login_required

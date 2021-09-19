@@ -1,7 +1,6 @@
 import moment from 'moment'
 import React, { createContext, FC, useEffect, useState } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
-
 import { Api } from '../../action/action'
 import {
    user_info,
@@ -17,7 +16,6 @@ import {
    MatchedSchedules,
 } from '../../types/types'
 import ScheduleTemplate from '../templates/scheduleTemplate'
-
 type ContextProps = {
    userInfo: UserInfo
    setUserInfo: any
@@ -34,9 +32,7 @@ type ContextProps = {
    selectUnixTime: any
    setSelectUnixTime: any
 }
-
 export const ScheduleContext = createContext({} as ContextProps)
-
 const Schedule: FC = () => {
    const location = useLocation()
    const history = useHistory()
@@ -45,7 +41,6 @@ const Schedule: FC = () => {
    const [matchedSchedules, setMatchedSchedules] = useState<any>(undefined)
    const [memberList, setMemberList] = useState<any>(undefined)
    const [selectUnixTime, setSelectUnixTime] = useState<number>(moment().unix())
-
    useEffect(() => {
       // console.log(localStorage.getItem('userInfo'))
       // console.log(location.state)
@@ -59,7 +54,6 @@ const Schedule: FC = () => {
             setEmptySchedules(res.empty_schedules)
          }
       })
-
       Api.getMembers().then((res: any) => {
          if (res) {
             setMemberList(res.members)
@@ -100,5 +94,4 @@ const Schedule: FC = () => {
       </div>
    )
 }
-
 export default Schedule

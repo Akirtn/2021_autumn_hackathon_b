@@ -14,7 +14,7 @@ def users_empty_schedule_get(user_info):
     """
     res_dic = {}
     info_lst = []
-    empty_schedules = db.session.query(User).filter_by(user_id=user_info.id).all()
+    empty_schedules = db.session.query(User).filter_by(id=user_info.id).all()
     for empty_s in empty_schedules:
         info_dic = {}
         info_dic["schedule_id"] = empty_s.id
@@ -31,7 +31,7 @@ def users_empty_schedule_post(user_id, start_time, end_time):
     input: user_id: Int, start_time: Int, end_time: Int
     output: schedule_id
     """
-    schedule = EmptySchedule(user_id=user_id, start_time=start_time, end_time=end_time)
+    schedule = EmptySchedule(id=user_id, start_time=start_time, end_time=end_time)
     db.session.add(schedule)
     db.session.commit()
     return schedule.id

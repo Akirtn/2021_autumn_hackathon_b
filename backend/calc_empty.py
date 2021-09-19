@@ -219,11 +219,13 @@ def calc_empty_schedule_humans(base_user_id,input_dict):
             if  starts_at <= matching_time < ends_at:
                 matching_users.append(user_key)
     if len(matching_users) == 2:
+        matching_time =int(matching_time.timestamp())
         return matching_users,matching_time
     elif len(matching_users) ==1:
         return [],0
     else:
         matching_users = random.sample(matching_users, 2)
+        matching_time =int(matching_time.timestamp())
         return matching_users,matching_time
       
 

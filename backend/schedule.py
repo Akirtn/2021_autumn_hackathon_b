@@ -1,6 +1,6 @@
 import http
-from flask import Blueprint,request,jsonify
-from flask.helpers import locked_cached_property
+from flask import Blueprint,request,jsonify,render_template
+from flask.helpers import locked_cached_property, url_for
 from flask.wrappers import Response
 from flask_login import login_user, logout_user, login_required
 from .wrapper import delete_empty_schedule, find_matched_result, users_empty_schedule_get, users_empty_schedule_post, users_matched_schedule_get, users_matched_schedule_save
@@ -9,9 +9,9 @@ from . import db,bcrypt
 from .wrapper import get_CurrentUser
 schdule = Blueprint('schedule', __name__)
 
-# @schdule.route('/')
-# def index():
-#     return 'Index'
+@schdule.route('/')
+def index():
+    return render_template('index.html')
 
 
 

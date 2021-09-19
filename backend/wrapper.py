@@ -53,7 +53,6 @@ def users_matched_schedule_get(user_info):
         for data in matched_data:
             info_dic = {}
             schedule = db.session.query(MatchedSchedule).filter_by(id=data.info).first()
-            schedule, table = matched_s
             info_dic["schedule_id"] = schedule.id
             info_dic["start_at"] = str(schedule.start_time)
             info_dic["end_at"] = str(schedule.end_time)

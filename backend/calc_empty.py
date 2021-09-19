@@ -14,36 +14,32 @@ test_input={
   "user1": {
     "xxx_times": [
       {
-        "starts_at": '1539097800',
-        "ends_at": '1539126000',
-      },
-      {
-        "starts_at": '1539133400',
-        "ends_at": '1539162000',
+        "starts_at": '1632150000',
+        "ends_at": '1632159000',
       }
     ]
   },
   "user2": {
     "xxx_times": [
       {
-        "starts_at": '1539115200',
-        "ends_at": '1539118800',
-      },
-      {
-        "starts_at": '1539136800',
-        "ends_at": '1539154800',
+        "starts_at": '1632153600',
+        "ends_at": '1632159000',
       }
     ]
   },
     "user3": {
     "xxx_times": [
       {
-        "starts_at": '1539174600',
-        "ends_at": '1539181800',
-      },
+        "starts_at": '1632150000',
+        "ends_at": '1632155400',
+      }
+    ]
+  },
+      "user4": {
+    "xxx_times": [
       {
-        "starts_at": '1539138600',
-        "ends_at": '1539162000',
+        "starts_at": '1632150000',
+        "ends_at": '1632153600',
       }
     ]
   }
@@ -137,8 +133,8 @@ def calc_empty_schedule_humans(base_user_id,input_dict):
               start_at,end_at = convert_start_end_time_to_span(start_at,end_at)
               starts_at_arrays.append(start_at)
               ends_at_arrays.append(end_at)
-    # print(starts_at_arrays)
-    # print(ends_at_arrays)
+    print(starts_at_arrays)
+    print(ends_at_arrays)
     user_a_s = starts_at_arrays
     user_a_e = ends_at_arrays
 
@@ -150,7 +146,7 @@ def calc_empty_schedule_humans(base_user_id,input_dict):
     #全ての入隊室を最初のを基準に時間のリストとする
     work_start_time = user_a_s[0]
     #検索期間の設定
-    search_period  =datetime.timedelta(days=1)
+    search_period  =datetime.timedelta(days=7)
     end =work_start_time+search_period
     hours=int(days_to_half_hours(search_period,time_span,hour))
 
@@ -238,7 +234,8 @@ def calc_empty_schedule_humans(base_user_id,input_dict):
 
 matching_users,matching_time = calc_empty_schedule_humans(base_user_id,test_input)
 #print(type(matching_users),type(matching_time))
-#print(matching_users,matching_time)
+dt = datetime.datetime.fromtimestamp(matching_time)
+print(matching_users,dt)
 # 実行結果
 # <class 'list'> <class 'int'>
 # ['user1', 'user3'] 1539138600

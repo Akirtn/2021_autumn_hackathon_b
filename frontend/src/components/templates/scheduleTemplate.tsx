@@ -3,7 +3,6 @@ import moment from 'moment'
 import React, { FC } from 'react'
 
 import Calendar from '../uiParts/calendar'
-import CustomizedSnackBar from '../uiParts/customSnackBar'
 import SchedulePostForm from '../uiParts/schedulePostForm'
 import TopAppBar from '../uiParts/topAppBar'
 

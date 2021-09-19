@@ -108,7 +108,7 @@ def users_members(user_info):
     for user in users_in_commnunity:
         info_dic = {}
         info_dic["user_id"] = user.id
-        info_dic["user_name"] = user.user_name
+        info_dic["name"] = user.user_name
         info_dic["tags"] = []
         tags = db.session.query(TagTable).filter_by(user_id=user.id).all()
         for tag in tags:

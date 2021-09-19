@@ -5,13 +5,13 @@ from .wrapper import get_CurrentUser, users_members
 
 main = Blueprint('main', __name__)
 
-@main.route('/users/members')
+@main.route('/users/members/')
 # @login_required
 def get_user_tag_members():
     ret=users_members(get_CurrentUser())
     return jsonify(ret)
 
-@main.route('/profile')
+@main.route('/profile/')
 def profile():
     return 'Profile'
 

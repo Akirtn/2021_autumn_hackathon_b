@@ -35,7 +35,7 @@ def register_schdule():
     # TODO return value
     return jsonify({"schedule_id":schedule_id}),http.HTTPStatus.OK
 
-@schdule.route('/users/empty_schedule/<int:schedule_id>',methods=['DELETE'])
+@schdule.route('/users/empty_schedule/<int:schedule_id>/',methods=['DELETE'])
 # @login_required
 def delete_schdule(schedule_id):
     # TODO：user_idとschedule_idがあっているか確認してから削除
@@ -68,7 +68,7 @@ def addcommit(o):
     db.session.commit()
 
 
-@schdule.route('/test')
+@schdule.route('/test/')
 def test():
     password_hash1 = g_pass('test1')
     user1 = User(id =1,user_name='Arita',community_id=1,email_address='hoge1@fuga.com',password_hash=password_hash1)

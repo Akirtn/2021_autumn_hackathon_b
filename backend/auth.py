@@ -7,7 +7,7 @@ from .wrapper import user_tags_get
 auth = Blueprint('auth', __name__)
 
 
-@auth.route('/users/login', methods=['POST'])
+@auth.route('/users/login/', methods=['POST'])
 def login():
     json=request.json
     email = json['email']
@@ -26,7 +26,7 @@ def login():
 
 
 
-@auth.route('/users/signup',methods=['DELETE'])
+@auth.route('/users/signup/',methods=['DELETE'])
 @login_required
 def logout():
     if logout_user():

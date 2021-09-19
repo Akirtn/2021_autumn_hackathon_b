@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Cookie from 'universal-cookie'
 
 import {
    UserInfo,
@@ -11,17 +12,25 @@ import {
 let api: any
 switch (window.location.host) {
    case 'http://localhost:3000':
-      api = 'http://dena-hackathon-2021.idichi.tk'
+      api = 'https://dena-hackathon-2021.idichi.tk'
       break
    case '': //本番
-      api = 'http://dena-hackathon-2021.idichi.tk'
+      api = 'https://dena-hackathon-2021.idichi.tk'
       break
    default:
-      api = 'http://dena-hackathon-2021.idichi.tk'
+      api = 'https://dena-hackathon-2021.idichi.tk'
 }
 
+const API_ORIGIN: string = 'http://localhost:3000' || ''
+const requestConfig = {
+   // baseURL: API_ORIGIN,
+   withCredentials: true,
+   headers: {
+      'Content-Type': 'application/json',
+   },
+}
 const errorHandler = (error: any) => {
-   // handle error
+   //handle error
    if (error.response) {
       // レスポンスは返ってくるが 200 番台じゃない場合
       alert(error.response.data)
@@ -43,12 +52,20 @@ export const Api = {
       password: string
    ): Promise<UserInfo | Error> => {
       return await axios
-         .post(`${api}/users/login`, {
-            email: email,
-            password: password,
-         })
+         .post(
+            `${api}/users/login`,
+            {
+               email: email,
+               password: password,
+            },
+            requestConfig
+         )
          .then(function (response) {
             // handle success
+            console.log(response.data)
+            console.log(response)
+
+            // cookie.set('access_token', .response.data.key, { path: '/' })
             return response.data
          })
          .catch(function (error) {
@@ -60,10 +77,14 @@ export const Api = {
       end_time: string
    ): Promise<{ schedule_id: string } | Error> => {
       return await axios
-         .post(`${api}/users/empty_schedule`, {
-            start_time,
-            end_time,
-         })
+         .post(
+            `${api}/users/empty_schedule/`,
+            {
+               start_time,
+               end_time,
+            },
+            requestConfig
+         )
          .then(function (response) {
             // handle success
             return response.data
@@ -74,7 +95,7 @@ export const Api = {
    },
    getMatchedSchedule: async (): Promise<MatchedSchedules | Error> => {
       return await axios
-         .get(`${api}/users/matched_schedule`)
+         .get(`${api}/users/matched_schedule`, requestConfig)
          .then(function (response) {
             // handle success
             return response.data
@@ -85,7 +106,7 @@ export const Api = {
    },
    matchSchedule: async (): Promise<void | Error> => {
       return await axios
-         .post(`${api}/users/matched_schedule`)
+         .post(`${api}/users/matched_schedule/`, null, requestConfig)
          .then(function () {
             // handle success
             return
@@ -96,7 +117,7 @@ export const Api = {
    },
    getEmptySchedule: async (): Promise<EmptySchedulesType | Error> => {
       return await axios
-         .get(`${api}/users/empty_schedule`)
+         .get(`${api}/users/empty_schedule`, requestConfig)
          .then(function (response) {
             // handle success
             return response.data
@@ -107,7 +128,7 @@ export const Api = {
    },
    getMembers: async (): Promise<Members | Error> => {
       return await axios
-         .get(`${api}/users/members`)
+         .get(`${api}/users/members`, requestConfig)
          .then(function (response) {
             // handle success
             return response.data

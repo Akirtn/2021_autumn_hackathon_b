@@ -35,8 +35,9 @@ const LoginForm: FC = () => {
 
    const handleSubmit = () => {
       setIsLoading(true)
-      Api.login(emailText, passwordText).then((res) => {
+      Api.login(emailText, passwordText).then((res: any) => {
          if (res) {
+            localStorage.setItem('userInfo', JSON.stringify(res))
             history.push({ pathname: '/schedule', state: res })
          } else {
             setHasError(true)

@@ -1,4 +1,3 @@
-import { DateDomainService } from './DateDomainService'
 import {
    MatchedSchedule,
    MatchedSchedules,
@@ -6,6 +5,8 @@ import {
    EmptySchedulesType,
 } from '../mocks/fetchData'
 import Theme from '../utils/theme'
+
+import { DateDomainService } from './DateDomainService'
 
 export class FormatScheduleService {
    //emptySchedules を fullCalendar に合う形で整形するメソッド

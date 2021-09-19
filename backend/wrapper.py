@@ -72,6 +72,7 @@ def users_matched_schedule_get(user_info):
     matched_data2 = db.session.query(MatchedTable).filter_by(user1_id=user_info.id).all()
     if matched_data2:
         info_lst += get_schedule_info(matched_data2, False)
+    if 
     res_dic["matched_schedules"] = info_lst
     return res_dic
 
@@ -145,11 +146,12 @@ def find_matched_result(user_info):
         dic[tagtable.tag_id] = tables
     # 同じコミュニティーかつ同じタグを持つユーザーのid
     candidate_lst = []
-    for tag_id, table in dic.items():
-        user = db.session.query(User).filter_by(id=table.user_id).first()
-        if user.community_id == community_id:
-            if not user.id in candidate_lst:
-                candidate_lst.append(user.id)
+    for tag_id, tables in dic.items():
+        for table in tables:
+            user = db.session.query(User).filter_by(id=table.user_id).first()
+            if user.community_id == community_id:
+                if not user.id in candidate_lst:
+                    candidate_lst.append(user.id)
     # 空き時間を探索する
     input_dic = {}
     for user_id in candidate_lst:

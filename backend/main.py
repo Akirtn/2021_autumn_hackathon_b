@@ -12,6 +12,7 @@ def get_user_tag_members():
     return jsonify(ret)
 
 @main.route('/profile/')
+@login_required
 def profile():
     return 'Profile'
 

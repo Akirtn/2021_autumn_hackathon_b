@@ -8,7 +8,7 @@
 # end_time[datetime.datetime(2017, 10, 10, 3, 0), datetime.datetime(2017, 10, 10, 10, 0)]
 # user1 start_time end_time
 # user2 start_time end_time
-base_user_id = "user2"
+base_user_id = "user1"
 human_num = 2
 test_input={
   "user1": {
@@ -137,8 +137,8 @@ def calc_empty_schedule_humans(base_user_id,input_dict):
               start_at,end_at = convert_start_end_time_to_span(start_at,end_at)
               starts_at_arrays.append(start_at)
               ends_at_arrays.append(end_at)
-    print(starts_at_arrays)
-    print(ends_at_arrays)
+    # print(starts_at_arrays)
+    # print(ends_at_arrays)
     user_a_s = starts_at_arrays
     user_a_e = ends_at_arrays
 
@@ -165,8 +165,8 @@ def calc_empty_schedule_humans(base_user_id,input_dict):
     for i in base_ends_at_array:
         temp = days_to_half_hours(i- work_start_time,time_span,hour)
         user_base_e_int_arrays.append(temp)
-    print(user_base_s_int_arrays)
-    print(user_base_e_int_arrays)
+    # print(user_base_s_int_arrays)
+    # print(user_base_e_int_arrays)
     for i in user_a_s:
         temp = days_to_half_hours(i- work_start_time,time_span,hour)
         user_a_s_int_arrays.append(temp)
@@ -185,7 +185,7 @@ def calc_empty_schedule_humans(base_user_id,input_dict):
     for i in range(hours):
         if 0 < i:
             table[i]+= table[i-1]
-    print(table)#30分の隙間で見ている、１時間でみるなら
+    # print(table)#30分の隙間で見ている、１時間でみるなら
     #base_user処理
     matching_time=0
     for (start,end) in zip (user_base_s_int_arrays,user_base_e_int_arrays):
@@ -197,7 +197,7 @@ def calc_empty_schedule_humans(base_user_id,input_dict):
 
 
     max_indexes =[i for i, v in enumerate(table) if v == max(table)]
-    print(max_indexes)
+    # print(max_indexes)
     max_times = []
     # for i in max_indexes:
     #     max_times.append(list_num_to_time(work_start_time,i*time_span_num))
@@ -235,8 +235,8 @@ def calc_empty_schedule_humans(base_user_id,input_dict):
     return matching_users,matching_time
 
 matching_users,matching_time = calc_empty_schedule_humans(base_user_id,test_input)
-print(type(matching_users),type(matching_time))
-print(matching_users,matching_time)
+#print(type(matching_users),type(matching_time))
+#print(matching_users,matching_time)
 # 実行結果
 # <class 'list'> <class 'int'>
 # ['user1', 'user3'] 1539138600

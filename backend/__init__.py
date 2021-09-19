@@ -25,7 +25,7 @@ def create_app():
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
-    
+
     @login_manager.unauthorized_handler
     def unauthrized():
         return Response(status=http.HTTPStatus.BAD_REQUEST)
@@ -49,5 +49,5 @@ def create_app():
     from .schedule import schdule as schdule_blueprint
     app.register_blueprint(schdule_blueprint)
 
-    CORS(app)
+    CORS(app, resources={"/*": {"origins": "*"}})
     return app

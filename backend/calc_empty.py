@@ -8,7 +8,8 @@
 # end_time[datetime.datetime(2017, 10, 10, 3, 0), datetime.datetime(2017, 10, 10, 10, 0)]
 # user1 start_time end_time
 # user2 start_time end_time
-base_user_id = "user1"
+base_user_id = "user2"
+human_num = 2
 test_input={
   "user1": {
     "xxx_times": [
@@ -51,6 +52,19 @@ test_input={
 import datetime
 import time
 import random
+
+def my_index(l, x, default=False):
+  if x==2:
+      if x in l:
+          return l.index(x)
+      else:
+        return default
+  elif x >2:
+      for i in range (2,x+1):
+          if i in l:
+              return l.index(i)
+  else:
+      return default
 
 
 def days_to_hours(td):
@@ -104,13 +118,25 @@ def calc_empty_schedule_humans(base_user_id,input_dict):
     #入力データ処理
     starts_at_arrays = []
     ends_at_arrays = []
+    base_starts_at_array = []
+    base_ends_at_array = []
     for user_key in input_dict.keys():
-        for times_key in input_dict[user_key]["xxx_times"]:
-            start_at = datetime.datetime.fromtimestamp(int(times_key["starts_at"]))
-            end_at = datetime.datetime.fromtimestamp(int(times_key["ends_at"]))
-            start_at,end_at = convert_start_end_time_to_span(start_at,end_at)
-            starts_at_arrays.append(start_at)
-            ends_at_arrays.append(end_at)
+       if user_key == base_user_id:
+          for times_key in input_dict[user_key]["xxx_times"]:
+              start_at = (datetime.datetime.fromtimestamp(int(times_key["starts_at"])))
+              end_at = (datetime.datetime.fromtimestamp(int(times_key["ends_at"])))
+              start_at,end_at = convert_start_end_time_to_span(start_at,end_at)
+              base_starts_at_array.append(start_at)
+              base_ends_at_array.append(end_at)
+              starts_at_arrays.append(start_at)
+              ends_at_arrays.append(end_at)
+       else: 
+          for times_key in input_dict[user_key]["xxx_times"]:
+              start_at = datetime.datetime.fromtimestamp(int(times_key["starts_at"]))
+              end_at = datetime.datetime.fromtimestamp(int(times_key["ends_at"]))
+              start_at,end_at = convert_start_end_time_to_span(start_at,end_at)
+              starts_at_arrays.append(start_at)
+              ends_at_arrays.append(end_at)
     print(starts_at_arrays)
     print(ends_at_arrays)
     user_a_s = starts_at_arrays
@@ -130,9 +156,17 @@ def calc_empty_schedule_humans(base_user_id,input_dict):
 
     user_a_s_int_arrays =[]
     user_a_e_int_arrays =[]
+    user_base_s_int_arrays =[]
+    user_base_e_int_arrays =[]
 
-
-
+    for i in base_starts_at_array:
+        temp = days_to_half_hours(i- work_start_time,time_span,hour)
+        user_base_s_int_arrays.append(temp)
+    for i in base_ends_at_array:
+        temp = days_to_half_hours(i- work_start_time,time_span,hour)
+        user_base_e_int_arrays.append(temp)
+    print(user_base_s_int_arrays)
+    print(user_base_e_int_arrays)
     for i in user_a_s:
         temp = days_to_half_hours(i- work_start_time,time_span,hour)
         user_a_s_int_arrays.append(temp)
@@ -142,7 +176,7 @@ def calc_empty_schedule_humans(base_user_id,input_dict):
     # print(user_a_e_int_arrays)
     #ismo
     table = [0]*hours
-    human_num = len(user_a_s)
+  
 
     for i in range(len(user_a_s)):
         table[user_a_s_int_arrays[i]]+=1
@@ -152,31 +186,38 @@ def calc_empty_schedule_humans(base_user_id,input_dict):
         if 0 < i:
             table[i]+= table[i-1]
     print(table)#30分の隙間で見ている、１時間でみるなら
-    max_indexes =[i for i, v in enumerate(table) if v == max(table)]
-    max_times = []
-    for i in max_indexes:
-        max_times.append(list_num_to_time(work_start_time,i*time_span_num))
-    # print(max_times)
-    if not max_times:
-        print(0)
-        exit()
-    else:
-        matching_time = max_times[0]
+    #base_user処理
+    matching_time=0
+    for (start,end) in zip (user_base_s_int_arrays,user_base_e_int_arrays):
+        base_user_table = table[start:end]
+        if my_index(base_user_table,human_num)!=False:
+            base_user_array_time = base_user_table.index(human_num) +start
+            matching_time  =  list_num_to_time(work_start_time,base_user_array_time*time_span_num)
+            break
 
+
+    max_indexes =[i for i, v in enumerate(table) if v == max(table)]
+    print(max_indexes)
+    max_times = []
+    # for i in max_indexes:
+    #     max_times.append(list_num_to_time(work_start_time,i*time_span_num))
+    # # print(max_times)
+    # if not max_times:
+    #     print(0)
+    #     exit()
+    # else:
+    #     matching_time = max_times[0]
+    if matching_time ==0:
+        print('No mathing')  
+        return [],0
     matching_users = []
-    base_starts_at_array = []
-    base_ends_at_array = []
+  
     for user_key in input_dict.keys():
-        if user_key == base_user_id:
-          for times_key in input_dict[user_key]["xxx_times"]:
-              base_starts_at_array.append(datetime.datetime.fromtimestamp(int(times_key["starts_at"])))
-              base_ends_at_array.append(datetime.datetime.fromtimestamp(int(times_key["ends_at"])))
-        else:
-          for times_key in input_dict[user_key]["xxx_times"]:
-              starts_at = datetime.datetime.fromtimestamp(int(times_key["starts_at"]))
-              ends_at = datetime.datetime.fromtimestamp(int(times_key["ends_at"]))
-              if  starts_at <= matching_time < ends_at:
-                  matching_users.append(user_key)
+        for times_key in input_dict[user_key]["xxx_times"]:
+            starts_at = datetime.datetime.fromtimestamp(int(times_key["starts_at"]))
+            ends_at = datetime.datetime.fromtimestamp(int(times_key["ends_at"]))
+            if  starts_at <= matching_time < ends_at:
+                matching_users.append(user_key)
     if len(matching_users) == 2:
         return matching_users,matching_time
     elif len(matching_users) ==1:

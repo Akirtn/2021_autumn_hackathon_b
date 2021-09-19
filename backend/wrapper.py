@@ -72,7 +72,6 @@ def users_matched_schedule_get(user_info):
     matched_data2 = db.session.query(MatchedTable).filter_by(user1_id=user_info.id).all()
     if matched_data2:
         info_lst += get_schedule_info(matched_data2, False)
-    if 
     res_dic["matched_schedules"] = info_lst
     return res_dic
 

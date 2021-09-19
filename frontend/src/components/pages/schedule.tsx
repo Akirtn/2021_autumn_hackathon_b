@@ -37,6 +37,10 @@ type ContextProps = {
 export const ScheduleContext = createContext({} as ContextProps)
 
 const Schedule: FC = () => {
+   const user = localStorage.getItem('user')
+
+   // ログイン API 叩けるようになったらこの処理
+   // const [userInfo, setUserInfo] = useState<UserInfo>(user)
    const [userInfo, setUserInfo] = useState<UserInfo>(user_info)
    const [emptySchedules, setEmptySchedules] =
       useState<EmptySchedulesType>(empty_schedules)

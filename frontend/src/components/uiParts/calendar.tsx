@@ -9,8 +9,8 @@ import Paper from '@material-ui/core/Paper'
 import { makeStyles } from '@material-ui/core/styles'
 import moment from 'moment'
 import React, { useEffect, useState, useContext, FC, memo } from 'react'
-import { FormatScheduleService } from '../../services/FormatScheduleService'
 
+import { FormatScheduleService } from '../../services/FormatScheduleService'
 import { ScheduleContext } from '../pages/schedule'
 
 const formatScheduleService = new FormatScheduleService()

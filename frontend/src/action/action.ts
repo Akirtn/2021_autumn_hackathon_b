@@ -31,19 +31,19 @@ const requestConfig = {
 }
 const errorHandler = (error: any) => {
    //handle error
-   if (error.response) {
-      // レスポンスは返ってくるが 200 番台じゃない場合
-      alert(error.response.data)
-      alert(error.response.status)
-      alert(error.response.headers)
-   } else if (error.request) {
-      // レスポンスがない場合
-      alert(error.request)
-   } else {
-      // それ以外
-      alert('Error' + error.message)
-   }
-   alert(error.config)
+   // if (error.response) {
+   //    // レスポンスは返ってくるが 200 番台じゃない場合
+   //    alert(error.response.data)
+   //    alert(error.response.status)
+   //    alert(error.response.headers)
+   // } else if (error.request) {
+   //    // レスポンスがない場合
+   //    alert(error.request)
+   // } else {
+   //    // それ以外
+   //    alert('Error' + error.message)
+   // }
+   // alert(error.config)
 }
 
 export const Api = {
@@ -53,7 +53,7 @@ export const Api = {
    ): Promise<UserInfo | Error> => {
       return await axios
          .post(
-            `${api}/users/login`,
+            `${api}/users/login/`,
             {
                email: email,
                password: password,
@@ -62,9 +62,6 @@ export const Api = {
          )
          .then(function (response) {
             // handle success
-            console.log(response.data)
-            console.log(response)
-
             // cookie.set('access_token', .response.data.key, { path: '/' })
             return response.data
          })
@@ -95,7 +92,7 @@ export const Api = {
    },
    getMatchedSchedule: async (): Promise<MatchedSchedules | Error> => {
       return await axios
-         .get(`${api}/users/matched_schedule`, requestConfig)
+         .get(`${api}/users/matched_schedule/`, requestConfig)
          .then(function (response) {
             // handle success
             return response.data
@@ -117,7 +114,7 @@ export const Api = {
    },
    getEmptySchedule: async (): Promise<EmptySchedulesType | Error> => {
       return await axios
-         .get(`${api}/users/empty_schedule`, requestConfig)
+         .get(`${api}/users/empty_schedule/`, requestConfig)
          .then(function (response) {
             // handle success
             return response.data
@@ -128,7 +125,7 @@ export const Api = {
    },
    getMembers: async (): Promise<Members | Error> => {
       return await axios
-         .get(`${api}/users/members`, requestConfig)
+         .get(`${api}/users/members/`, requestConfig)
          .then(function (response) {
             // handle success
             return response.data

@@ -120,6 +120,8 @@ def calc_empty_schedule_humans(base_user_id,input_dict):
     ends_at_arrays = []
     base_starts_at_array = []
     base_ends_at_array = []
+    if len(input_dict.keys())==1:
+       return [],0
     for user_key in input_dict.keys():
        if user_key == base_user_id:
           for times_key in input_dict[user_key]["xxx_times"]:

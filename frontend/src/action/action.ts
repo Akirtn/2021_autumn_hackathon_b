@@ -11,13 +11,13 @@ import {
 let api: any
 switch (window.location.host) {
    case 'http://localhost:3000':
-      api = 'http://localhost:5000'
+      api = 'http://dena-hackathon-2021.idichi.tk'
       break
    case '': //本番
-      api = ''
+      api = 'http://dena-hackathon-2021.idichi.tk'
       break
    default:
-      api = 'http://localhost:5000'
+      api = 'http://dena-hackathon-2021.idichi.tk'
 }
 
 const errorHandler = (error: any) => {

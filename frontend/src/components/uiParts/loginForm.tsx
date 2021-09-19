@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom'
 
 import { Api } from '../../action/action'
 import Theme from '../../utils/theme'
+import Loading from '../Loading'
 
 const useStyles = makeStyles((theme) => ({
    form: {
@@ -30,14 +31,17 @@ const LoginForm: FC = () => {
    const [emailText, setEmailText] = useState('')
    const [passwordText, setPasswordText] = useState('')
    const [hasError, setHasError] = useState(false)
+   const [isLoading, setIsLoading] = useState(false)
 
    const handleSubmit = () => {
+      setIsLoading(true)
       Api.login(emailText, passwordText).then((res) => {
          if (res) {
             history.push({ pathname: '/schedule', state: res })
          } else {
             setHasError(true)
          }
+         setIsLoading(false)
       })
    }
 
@@ -69,6 +73,7 @@ const LoginForm: FC = () => {
                   setPasswordText(e.target.value)
                }}
             />
+            <Loading isLoading={isLoading} />
             <Button
                variant="contained"
                className={classes.button}

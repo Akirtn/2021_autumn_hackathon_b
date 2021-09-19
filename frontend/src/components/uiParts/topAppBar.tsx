@@ -59,6 +59,8 @@ const TopAppBar: FC = (props) => {
       width: '40px',
       height: '40px',
    }
+    console.log(memberList)
+    
    return (
       <div className={classes.root}>
          <CssBaseline />

@@ -1,3 +1,4 @@
+import moment from 'moment'
 import React, { createContext, FC, useEffect, useState } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 
@@ -7,28 +8,52 @@ import {
    matched_schedules,
    members,
 } from '../../mocks/fetchData'
+import {
+   UserInfo,
+   Members,
+   EmptySchedulesType,
+   MatchedSchedule,
+   MatchedSchedules,
+} from '../../types/types'
 import ScheduleTemplate from '../templates/scheduleTemplate'
 
 type ContextProps = {
-   userInfo: any
+   userInfo: UserInfo
    setUserInfo: any
-   emptySchedules: any
+   emptySchedules: EmptySchedulesType
    setEmptySchedules: any
-   matchedSchedules: any
+   matchedSchedules: MatchedSchedules
    setMatchedSchedules: any
-   memberList: any
+   memberList: Members
    setMemberList: any
+   // startDate: any
+   // setStartDate: any
+   // endDate: any
+   // setEndDate: any
+   selectUnixTime: any
+   setSelectUnixTime: any
 }
 
 export const ScheduleContext = createContext({} as ContextProps)
 
 const Schedule: FC = () => {
-   const [userInfo, setUserInfo] = useState<any>(user_info)
-   const [emptySchedules, setEmptySchedules] = useState<any>(empty_schedules)
+   const [userInfo, setUserInfo] = useState<UserInfo>(user_info)
+   const [emptySchedules, setEmptySchedules] =
+      useState<EmptySchedulesType>(empty_schedules)
    const [matchedSchedules, setMatchedSchedules] =
-      useState<any>(matched_schedules)
-   const [memberList, setMemberList] = useState<any>(members)
+      useState<MatchedSchedules>(matched_schedules)
+   const [memberList, setMemberList] = useState<Members>(members)
+   const [selectUnixTime, setSelectUnixTime] = useState<number>(moment().unix())
+   // const [startDate, setStartDate] = useState(moment().format('HH:mm'))
+   // const [endDate, setEndDate] = useState(moment().format('HH:mm'))
+   // const [alert, setAlert] = useState({
+   //    message: '',
+   //    severity: '',
+   //    isAlert: false,
+   // })
+
    const location = useLocation()
+
    // ここにユーザ情報入ってます
    console.log(location.state)
    return (
@@ -43,6 +68,12 @@ const Schedule: FC = () => {
                setMatchedSchedules,
                memberList,
                setMemberList,
+               // startDate,
+               // setStartDate,
+               // endDate,
+               // setEndDate,
+               selectUnixTime,
+               setSelectUnixTime,
             }}
          >
             <ScheduleTemplate />

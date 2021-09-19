@@ -155,7 +155,7 @@ def find_matched_result(user_info):
     input_dic = {}
     for user_id in candidate_lst:
         empty_schedules = db.session.query(EmptySchedule).filter_by(user_id=user_id).all()
-        input_dic[user_id] = {"xxx_times": []}
+        input_dic[str(user_id)] = {"xxx_times": []}
         for empty_schedule in empty_schedules:
             input_dic[str(user_id)]["xxx_times"].append(
                 {"start_at": empty_schedule.start_time, "ends_at": empty_schedule.end_time})

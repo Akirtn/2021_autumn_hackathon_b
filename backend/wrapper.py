@@ -3,7 +3,7 @@ from .models import User, Community, TagTable, Tag, MatchedSchedule, MatchedTabl
 from .calc_empty import calc_empty_schedule_humans
 
 def get_CurrentUser():
-    user=db.session.query(User).filter_by(user_id=1).first()
+    user=db.session.query(User).filter_by(id=1).first()
     return user
 
 def users_empty_schedule_get(user_info):

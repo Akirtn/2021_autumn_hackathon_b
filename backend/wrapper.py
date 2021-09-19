@@ -14,12 +14,12 @@ def users_empty_schedule_get(user_info):
     """
     res_dic = {}
     info_lst = []
-    empty_schedules = db.session.query(User).filter_by(id=user_info.id).all()
+    empty_schedules = db.session.query(EmptySchedule).filter_by(user_id=user_info.id).all()
     for empty_s in empty_schedules:
         info_dic = {}
         info_dic["schedule_id"] = empty_s.id
         info_dic["start_at"] = str(empty_s.start_time)
-        info_dic["end_at"] = str(empty_s)
+        info_dic["end_at"] = str(empty_s.end_time)
         info_lst.append(info_dic)
     res_dic["empty_schedules"] = info_lst
     return res_dic

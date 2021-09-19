@@ -31,7 +31,7 @@ def users_empty_schedule_post(user_id, start_time, end_time):
     input: user_id: Int, start_time: Int, end_time: Int
     output: schedule_id
     """
-    schedule = EmptySchedule(id=user_id, start_time=start_time, end_time=end_time)
+    schedule = EmptySchedule(user_id=user_id, start_time=start_time, end_time=end_time)
     db.session.add(schedule)
     db.session.commit()
     return schedule.id

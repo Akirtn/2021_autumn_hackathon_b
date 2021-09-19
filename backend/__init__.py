@@ -1,7 +1,9 @@
-from flask import Flask
+import http
+from flask import Flask,Response
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager 
 from flask_migrate import Migrate 
+from flask_cors import CORS
 from flask_bcrypt import Bcrypt
 import os
 # init SQLAlchemy so we can use it later in our models
@@ -23,6 +25,10 @@ def create_app():
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
+    
+    @login_manager.unauthorized_handler
+    def unauthrized():
+        return Response(status=http.HTTPStatus.BAD_REQUEST)
 
     from .models import User
 
@@ -43,4 +49,5 @@ def create_app():
     from .schedule import schdule as schdule_blueprint
     app.register_blueprint(schdule_blueprint)
 
+    CORS(app)
     return app

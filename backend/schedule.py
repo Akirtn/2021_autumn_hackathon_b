@@ -127,6 +127,7 @@ def test():
     tagtable5 = TagTable(id =5,user_id =5,tag_id=5)
     # 2021-9-20 15:00:00, 2021-9-20 16:00:00
     emptyschedule5 = EmptySchedule(id=5,user_id=5,start_time=1632150000,end_time=1632153600)
+    addcommit(com5)
     addcommit(user5)
     addcommit(tag5)
     addcommit(tagtable5)

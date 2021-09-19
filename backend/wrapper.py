@@ -125,5 +125,5 @@ def user_tags_get(user_info):
     output: res_array: array
     """
     q=db.session.query(Tag,TagTable).join(Tag, TagTable.user_id==user_info.id).all()
-    res_array=[t.tag_name for t in q]
+    res_array=[t.tag_name for t,_ in q]
     return res_array

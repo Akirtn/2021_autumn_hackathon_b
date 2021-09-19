@@ -12,7 +12,8 @@ bcrypt = None
 def create_app():
     global bcrypt
     config.COOKIE_HTTPONLY=False
-    app = Flask(__name__)
+    path=os.path.dirname(os.path.abspath(__file__))
+    app = Flask(__name__,static_folder=os.path.join(path,"../frontend/build"))
 
     app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY",default="secret")
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL",'sqlite:///db.sqlite')

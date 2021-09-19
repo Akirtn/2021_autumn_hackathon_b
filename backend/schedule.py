@@ -55,7 +55,7 @@ def get_matched_schdule():
             "end_at": str(1632036660+30*60),
             "matched_member": {
                 "user_id": 2,
-                "name": "string"
+                "name": "ijichi"
             }
             }
         ]

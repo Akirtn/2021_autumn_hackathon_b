@@ -104,7 +104,7 @@ def users_members(user_info):
     """
     res_dic = {}
     info_lst = []
-    community_id = user_info.comminuty_id
+    community_id = user_info.community_id
     users_in_commnunity = db.session.query(User).filter_by(community_id=community_id).all()
     for user in users_in_commnunity:
         info_dic = {}

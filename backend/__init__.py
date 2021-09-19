@@ -49,7 +49,7 @@ def create_app():
     from .schedule import schdule as schdule_blueprint
     app.register_blueprint(schdule_blueprint)
 
-    CORS(app, resources={"/*": {"origins": "*"}})
+    # CORS(app, resources={"/*": {"origins": "*"}})
 
     @app.after_request
     def after_request(response):

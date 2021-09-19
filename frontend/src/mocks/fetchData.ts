@@ -47,7 +47,7 @@ export const matched_schedules: MatchedSchedules = [
       end_at: String(moment('2021-09-22T10:00:00').unix()),
       matched_member: {
          user_id: 0,
-         name: 'asahara',
+         name: '浅原',
       },
    },
 ]

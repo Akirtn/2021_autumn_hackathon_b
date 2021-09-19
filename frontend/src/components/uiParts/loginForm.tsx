@@ -11,8 +11,11 @@ import Loading from '../Loading'
 
 const useStyles = makeStyles((theme) => ({
    form: {
-      height: window.innerHeight * 0.5,
       textAlign: 'center',
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%,-50%)',
    },
    button: {
       marginTop: theme.spacing(2),
@@ -35,8 +38,9 @@ const LoginForm: FC = () => {
 
    const handleSubmit = () => {
       setIsLoading(true)
-      Api.login(emailText, passwordText).then((res) => {
+      Api.login(emailText, passwordText).then((res: any) => {
          if (res) {
+            localStorage.setItem('userInfo', JSON.stringify(res))
             history.push({ pathname: '/schedule', state: res })
          } else {
             setHasError(true)

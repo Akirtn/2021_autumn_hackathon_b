@@ -1,6 +1,7 @@
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { makeStyles } from '@material-ui/core/styles'
 import React, { FC } from 'react'
+
 import Theme from '../utils/theme'
 
 type Props = {
@@ -22,7 +23,7 @@ const useStyles = makeStyles(() => ({
    circle: {
       color: Theme.color.primaryColor,
       position: 'absolute',
-      left: window.outerWidth * 0.5 - 40,
+      left: window.innerWidth * 0.5 - 24,
       top: screen.height * 0.5 - 40,
    },
 }))

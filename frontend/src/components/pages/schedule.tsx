@@ -2,6 +2,7 @@ import moment from 'moment'
 import React, { createContext, FC, useEffect, useState } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 
+import { Api } from '../../action/action'
 import {
    user_info,
    empty_schedules,
@@ -37,47 +38,82 @@ type ContextProps = {
 export const ScheduleContext = createContext({} as ContextProps)
 
 const Schedule: FC = () => {
-   const [userInfo, setUserInfo] = useState<UserInfo>(user_info)
-   const [emptySchedules, setEmptySchedules] =
-      useState<EmptySchedulesType>(empty_schedules)
-   const [matchedSchedules, setMatchedSchedules] =
-      useState<MatchedSchedules>(matched_schedules)
-   const [memberList, setMemberList] = useState<Members>(members)
-   const [selectUnixTime, setSelectUnixTime] = useState<number>(moment().unix())
-   // const [startDate, setStartDate] = useState(moment().format('HH:mm'))
-   // const [endDate, setEndDate] = useState(moment().format('HH:mm'))
-   // const [alert, setAlert] = useState({
-   //    message: '',
-   //    severity: '',
-   //    isAlert: false,
-   // })
-
    const location = useLocation()
+   const history = useHistory()
+   const [userInfo, setUserInfo] = useState<any>(location.state)
+   const [emptySchedules, setEmptySchedules] = useState<any>(undefined)
+   const [matchedSchedules, setMatchedSchedules] = useState<any>(undefined)
+   const [memberList, setMemberList] = useState<any>(undefined)
+   const [selectUnixTime, setSelectUnixTime] = useState<number>(moment().unix())
+
+   useEffect(() => {
+      // console.log(localStorage.getItem('userInfo'))
+      // console.log(location.state)
+      Api.getMatchedSchedule().then((res: any) => {
+         if (res) {
+            setMatchedSchedules(res)
+         }
+      })
+      Api.getEmptySchedule().then((res: any) => {
+         if (res) {
+            setEmptySchedules(res)
+         }
+      })
+
+      Api.getMembers().then((res: any) => {
+         if (res) {
+            setMemberList(res)
+         }
+      })
+      if (!userInfo && localStorage.getItem('userInfo')) {
+         const getUserjson: any = localStorage.getItem('userInfo')
+         console.log(getUserjson)
+         console.log('aaa')
+         const getUser: any = JSON.parse(getUserjson)
+         console.log(getUser)
+         setUserInfo(getUser)
+         Api.getMatchedSchedule().then((res: any) => {
+            if (res) {
+               setMatchedSchedules(res)
+            }
+         })
+         Api.getEmptySchedule().then((res: any) => {
+            if (res) {
+               setEmptySchedules(res)
+            }
+         })
+         Api.getMembers().then((res: any) => {
+            if (res) {
+               setMemberList(res)
+            }
+         })
+      } else {
+         history.push({ pathname: '/' })
+      }
+   }, [])
 
    // ここにユーザ情報入ってます
-   //console.log(location.state)
+   console.log({ userInfo, emptySchedules, matchedSchedules, memberList })
    return (
       <div>
-         <ScheduleContext.Provider
-            value={{
-               userInfo,
-               setUserInfo,
-               emptySchedules,
-               setEmptySchedules,
-               matchedSchedules,
-               setMatchedSchedules,
-               memberList,
-               setMemberList,
-               // startDate,
-               // setStartDate,
-               // endDate,
-               // setEndDate,
-               selectUnixTime,
-               setSelectUnixTime,
-            }}
-         >
-            <ScheduleTemplate />
-         </ScheduleContext.Provider>
+         {userInfo && emptySchedules && matchedSchedules && memberList && (
+            <ScheduleContext.Provider
+               value={{
+                  userInfo,
+                  setUserInfo,
+                  emptySchedules,
+                  setEmptySchedules,
+                  matchedSchedules,
+                  setMatchedSchedules,
+                  memberList,
+                  setMemberList,
+                  selectUnixTime,
+                  setSelectUnixTime,
+               }}
+            >
+               <ScheduleTemplate />
+            </ScheduleContext.Provider>
+         )}
       </div>
    )
 }

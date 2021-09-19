@@ -5,8 +5,8 @@ from .wrapper import users_members
 
 main = Blueprint('main', __name__)
 
-@login_required
 @main.route('/users/members')
+@login_required
 def get_user_tag_members():
     ret=users_members(current_user)
     return jsonify(ret)

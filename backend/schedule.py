@@ -12,15 +12,15 @@ schdule = Blueprint('schedule', __name__)
 def index():
     return 'Index'
 
-@login_required
 @schdule.route('/users/empty_schedule/',methods=['GET'])
+@login_required
 def get_schdule():
     ret_value=users_empty_schedule_get(current_user)
     return jsonify(ret_value),http.HTTPStatus.OK
 
 
-@login_required
 @schdule.route('/users/empty_schedule/',methods=['POST'])
+@login_required
 def register_schdule():
     json=request.json()
     start_time=json["start_time"]
@@ -32,20 +32,20 @@ def register_schdule():
     # TODO return value
     return jsonify({"schedule_id":schedule_id}),http.HTTPStatus.OK
 
-@login_required
 @schdule.route('/users/empty_schedule/<int:schedule_id>',methods=['DELETE'])
+@login_required
 def delete_schdule(schedule_id):
     # TODO：user_idとschedule_idがあっているか確認してから削除
     return Response(status=http.HTTPStatus.BAD_REQUEST)
 
-@login_required
 @schdule.route('/users/matched_schedule/',methods=['GET'])
+@login_required
 def get_matched_schdule():
     res=users_matched_schedule_get(current_user)
     return jsonify(res)
 
-@login_required
 @schdule.route('/users/matched_schedule/',methods=['POST'])
+@login_required
 def register_matched_schdule():
     user_id=current_user.id
     # TODO

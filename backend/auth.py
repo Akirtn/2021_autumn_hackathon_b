@@ -26,8 +26,8 @@ def login():
 
 
 
-@login_required
 @auth.route('/users/signup',methods=['DELETE'])
+@login_required
 def logout():
     if logout_user():
         return Response(status=HTTPStatus.OK)

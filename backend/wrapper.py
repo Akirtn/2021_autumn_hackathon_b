@@ -161,7 +161,7 @@ def find_matched_result(user_info):
                 {"start_at": empty_schedule.start_time, "ends_at": empty_schedule.end_time})
     print(input_dic)
     print(user_info.id)
-    matched_users, matched_start_time = calc_empty_schedule_humans(input_dic, user_info.id)
+    matched_users, matched_start_time = calc_empty_schedule_humans(user_info.id, input_dic)
     if not matched_users:
         return None, None, None
     matched_user_id = int(matched_users[0]) if int(matched_users[0]) != user_info.id else int(matched_users[1])

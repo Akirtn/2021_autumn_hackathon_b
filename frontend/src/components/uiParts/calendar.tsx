@@ -50,7 +50,7 @@ const Calendar: FC = (props) => {
       setIsReRender(true)
    }, [isReRender])
 
-   console.log(selectUnixTime)
+  // console.log(selectUnixTime)
 
    return (
       <div className={classes.root}>
